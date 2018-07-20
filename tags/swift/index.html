@@ -20,9 +20,10 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/swift.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/bash.min.js"></script>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
     <link rel="stylesheet" href="/css/index.css">
-    <link href="//at.alicdn.com/t/font_751236_xi9a4am4s17.css" rel="stylesheet" type="text/css">
+    <link href="//at.alicdn.com/t/font_751236_90n6bpjkuko.css" rel="stylesheet" type="text/css">
     <script type="text/javascript">
         $(document).ready(function() {
             $('pre code').each(function(i, block) {
@@ -38,7 +39,7 @@
     <a class="navbar-brand" href="#">
         <img src="/img/ava.jpg" width="30" height="30" alt="">
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler btn-sm border-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -46,11 +47,6 @@
             <li class="nav-item">
                 <a href="/" class=" nav-link ">
                     Home
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/tags" class=" nav-link active ">
-                    Tags
                 </a>
             </li>
             <li class="nav-item">
@@ -70,54 +66,63 @@
         <hr />
         <div class="container">
             
-
-
-<!-- 归档列表 -->
-
+<!-- 标签列表 -->
 <div class="container">
-    
-    <div class="card w-100">
-        <div class="card-body">
-            <span id="2018">
-                <span class="card-title">2018</span>
-            </span>
-            <ul class="list-group list-group-flush">
-                
-                <li class="list-group-item bg-light border-0">
-                    <span>07-17</span>
-                    <i aria-hidden="true"></i>
-                    <a class="card-text text-info" href="/2018/07/17/hello-world/">
-                        <span>
-                            Hello World
-                        </span>
-                    </a>
-                </li>
-                
-            </ul>
+    <div class="row">
+        <div class="tag_list">
+            
+            <a class="btn btn-sm mb-1  btn-outline-info " href="/tags/iOS/" title="iOS" rel="6">iOS</a>
+            
+            <a class="btn btn-sm mb-1  btn-outline-info " href="/tags/UILabel/" title="UILabel" rel="4">UILabel</a>
+            
+            <a class="btn btn-sm mb-1  btn-outline-info " href="/tags/webView/" title="webView" rel="1">webView</a>
+            
+            <a class="btn btn-sm mb-1 btn-info" href="/tags/swift/" title="swift" rel="1">swift</a>
+            
+            <a class="btn btn-sm mb-1  btn-outline-info " href="/tags/Android/" title="Android" rel="1">Android</a>
+            
+            <a class="btn btn-sm mb-1  btn-outline-info " href="/tags/CentOS/" title="CentOS" rel="1">CentOS</a>
+            
+            <a class="btn btn-sm mb-1  btn-outline-info " href="/tags/Mac/" title="Mac" rel="1">Mac</a>
+            
+        </div>
+        <div class="tag_post_list">
+            <div class="card w-100">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                    
+                        <li class="list-group-item bg-light border-0">
+                            <a class="card-text text-info" href="/2018/07/17/hello-world/">
+                            Hello World <br />
+                            </a>
+                            <span>2018-07-17</span>
+                        </li>
+                    
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item  disabled ">
+                        <a class="page-link" href="/">Previous</a>
+                    </li>
+                    <li class="page-item  disabled ">
+                        <a class="page-link" href="/">Next</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Total: 1</a>
+                    </li>
+                    <li class="page-item disabled">
+                    <a class="page-link" href="#">Current: 1</a>
+                    </li>
+
+                </ul>
+            </nav>
         </div>
     </div>
-    
-    <div class="card w-100">
-        <div class="card-body">
-            <span id="2017">
-                <span class="card-title">2017</span>
-            </span>
-            <ul class="list-group list-group-flush">
-                
-                <li class="list-group-item bg-light border-0">
-                    <span>10-10</span>
-                    <i aria-hidden="true"></i>
-                    <a class="card-text text-info" href="/2017/10/10/UILabel之Inset/">
-                        <span>
-                            UILabel之Inset
-                        </span>
-                    </a>
-                </li>
-                
-            </ul>
-        </div>
-    </div>
-    
+
 </div>
         </div>
         <div class="container">
@@ -172,7 +177,11 @@
 
     </p>
     <p class="text-center text-muted footerFont">
-        © 2018 - 2019 Murph Lu | Powered by <a class="text-info" href="https://hexo.io">Hexo</a>
+
+        © 2018 - 2019 Murph Lu | Powered by <a class="text-info" href="https://hexo.io">Hexo</a> |
+        <span id="busuanzi_container_site_uv">
+            visitor <span id="busuanzi_value_site_uv"></span>
+        </span>
     </p>
 </div>
         </div>

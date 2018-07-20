@@ -68,25 +68,19 @@
             <div class="container">
     <div>
         <h5>
-            Hello World
+            WKWebView下js的alert(),confirm(),prompt()方法无法正常执行
         </h5>
     </div>
 
     <div class="postHeaderFontTime">
-        <span>2018-07-17 14:38:00</span>
+        <span>2017-11-22 10:44:00</span>
         <span>&nbsp&nbsp&nbsp</span>
         
         <span><span class="iconfont icon-tags"></span>
             
             <a class="text-secondary" href="/tags/#iOS" title="iOS">iOS</a>
             
-            <a class="text-secondary" href="/tags/#swift" title="swift">swift</a>
-            
-            <a class="text-secondary" href="/tags/#Android" title="Android">Android</a>
-            
-            <a class="text-secondary" href="/tags/#CentOS" title="CentOS">CentOS</a>
-            
-            <a class="text-secondary" href="/tags/#Mac" title="Mac">Mac</a>
+            <a class="text-secondary" href="/tags/#webView" title="webView">webView</a>
             
             
         </span>
@@ -97,25 +91,60 @@
     <hr />
     <div class="post-content ">
         <div class="markdown-body">
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
-</code></pre>
-<pre><code class="Swift">func test() {
-    let a: Int = 10
-    print(a)
+            <p>由于安全机制的问题，WKWebView默认对JavaScript下alert类的方法（包括alert(),confirm(),prompt()）做了拦截，如果要想正常使用，需要实现WKWebView的三个代理方法</p>
+<pre><code>
+//用于拦截alert方法，实现该方法后可以js可以正常调用alert方法
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler;
+
+//用于拦截confirm方法，实现该方法后可以js可以正常调用confirm方法
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler;
+
+//用于拦截prompt方法，实现该方法后可以js可以正常调用prompt方法
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable result))completionHandler;
+</code></pre><p>下面我们来看一下三个代理方法的具体实现</p>
+<h4 id="alert"><a href="#alert" class="headerlink" title="alert"></a>alert</h4><pre><code>
+//此方法作为js的alert方法接口的实现，默认弹出窗口应该只有提示信息及一个确认按钮，当然可以添加更多按钮以及其他内容，但是并不会起到什么作用
+//点击确认按钮的相应事件需要执行completionHandler，这样js才能继续执行
+////参数 message为  js 方法 alert(&lt;message&gt;) 中的&lt;message&gt;
+-(void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message?:@&quot;&quot; preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:([UIAlertAction actionWithTitle:@&quot;确认&quot; style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler();
+    }])];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+</code></pre><p>####confirm</p>
+<pre><code>//作为js中confirm接口的实现，需要有提示信息以及两个相应事件， 确认及取消，并且在completionHandler中回传相应结果，确认返回YES， 取消返回NO
+//参数 message为  js 方法 confirm(&lt;message&gt;) 中的&lt;message&gt;
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler{
+
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@&quot;提示&quot; message:message?:@&quot;&quot; preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:([UIAlertAction actionWithTitle:@&quot;取消&quot; style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(NO);
+    }])];
+    [alertController addAction:([UIAlertAction actionWithTitle:@&quot;确认&quot; style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(YES);
+    }])];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+</code></pre><h4 id="prompt"><a href="#prompt" class="headerlink" title="prompt"></a>prompt</h4><pre><code>//作为js中prompt接口的实现，默认需要有一个输入框一个按钮，点击确认按钮回传输入值
+//当然可以添加多个按钮以及多个输入框，不过completionHandler只有一个参数，如果有多个输入框，需要将多个输入框中的值通过某种方式拼接成一个字符串回传，js接收到之后再做处理
+
+//参数 prompt 为 prompt(&lt;message&gt;, &lt;defaultValue&gt;);中的&lt;message&gt;
+//参数defaultText 为 prompt(&lt;message&gt;, &lt;defaultValue&gt;);中的 &lt;defaultValue&gt;
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable))completionHandler{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:prompt message:@&quot;&quot; preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.text = defaultText;
+    }];
+    [alertController addAction:([UIAlertAction actionWithTitle:@&quot;完成&quot; style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(alertController.textFields[0].text?:@&quot;&quot;);
+    }])];
+
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 </code></pre>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
         </div>
         <div id="comment-container">
         </div>
