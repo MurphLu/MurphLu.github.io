@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <title>
+        
+        关于限制输入长度的UITextFiled和UITextView中文输入下的问题
+        
+    </title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.css"/>
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/swift.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/ruby.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/bash.min.js"></script>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="/js/md5.js"></script>
+
+    <link href="//at.alicdn.com/t/font_751236_90n6bpjkuko.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('pre code').each(function(i, block) {
+                hljs.highlightBlock(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="container">
+            <div class="navbar navbar-expand-sm navbar-light">
+    <a class="navbar-brand" href="#">
+        <img src="/img/ava.jpg" width="30" height="30" alt="">
+    </a>
+    <button class="navbar-toggler btn-sm border-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a href="/" class=" nav-link ">
+                    Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/archives" class=" nav-link ">
+                    Archives
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/about/" class=" nav-link ">
+                    about
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+        </div>
+        <hr />
+        <div class="container">
+            <div class="container">
+    <div>
+        <h5>
+            关于限制输入长度的UITextFiled和UITextView中文输入下的问题
+        </h5>
+    </div>
+
+    <div class="postHeaderFontTime">
+        <span>2016-10-29 18:16:00</span>
+        <span>&nbsp&nbsp&nbsp</span>
+        
+        <span><span class="iconfont icon-tags"></span>
+            
+            <a class="text-secondary" href="/tags/iOS/" title="iOS">iOS</a>
+            
+            <a class="text-secondary" href="/tags/UITextFiled/" title="UITextFiled">UITextFiled</a>
+            
+            <a class="text-secondary" href="/tags/UITextView/" title="UITextView">UITextView</a>
+            
+            
+        </span>
+
+        <span>&nbsp&nbsp&nbsp</span>
+        <span class="iconfont icon-read"></span> <span class="text-secondary" id="busuanzi_value_page_pv"></span>
+    </div>
+    <hr />
+    <div class="post-content ">
+        <div class="markdown-body">
+            <p>我们在开发中很多时候会遇到需要显示输入框的文本输入长度，一般就直接通过监听textField的文字改变并做处理就好了，但是有时候往往不注意就会出现小bug，如果只是这样写的话</p>
+<pre><code>- (void)viewDidLoad {
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+}
+
+-(void)textDidChange:(NSNotification *)noti{
+    NSString *textFieldStr = self.textField.text;
+//监听文字改变，当超出时截取
+    if (self.textField.text.length &gt; 10) {
+        self.textField.text= [textFieldStr substringToIndex:10];
+    }
+}
+</code></pre><p>就如下面这样</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1648999-47b89c08cbff14d5.gif?imageMogr2/auto-orient/strip" alt="输入bug.gif"></p>
+<p>之所以会这样是因为我们在输入的时候没有判断中文输入法中正在输入的拼音（也就是选中的部分内容所占的长度）在TextField中占的长度，这样当输入我们所要控制长度一半的拼音字母的时候就会自动截取前五个（假如我们设的最大长度为10）或者（10-前面输入内容）/ 2个字符</p>
+<p>解决这个问题可以在textDidChange这个方法中判断当前输入法是什么，并且是否有正在输入的拼音，如果有暂时不做处理，没有的话再进行截取，</p>
+<p>修改后的textDidChange方法大概是这样的</p>
+<pre><code>-(void)textDidChange:(NSNotification *)noti{
+  //首先判断是否设置了最大长度，如果没有则直接返回
+    if (self.maxLength == 0) {
+        return;
+    }
+  //获取TextField
+    UITextField *textField = (UITextField *) noti.object;
+//获取TextField中的内容
+    NSString *str = textField.text;
+ // 获取键盘输入模式
+    NSString *currentInputMode = [[UITextInputMode currentInputMode] primaryLanguage];
+ //简体中文输入，包括简体拼音，健体五笔，简体手写
+    if([currentInputMode isEqualToString:@&quot;zh-Hans&quot;]) {
+        UITextRange *selectedRange = [textField markedTextRange];
+        //获取高亮部分
+        UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+        //如果没有高亮选择的字，则对已输入的文字进行字数统计和限制，有高亮的字则不做处理
+        if(!position) {
+            if(toBeString.length &gt; self.maxLength) {
+                textField.text = [str substringToIndex:self.maxLength];
+            }
+        }
+    }
+    //中文输入法之外的输入则不需要再加以判断直接截取就ok了
+    else{
+        if(toBeString.length &gt; self.maxLength) {
+            textField.text= [toBeString substringToIndex:self.maxLength];
+        }
+    }
+}
+</code></pre><p>然后我们来看一下效果</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1648999-082f6db86633c96e.gif?imageMogr2/auto-orient/strip" alt="输入正常.gif"></p>
+<p>是不是可以爽快的进行输入了，没有任何问题，哈哈哈，ok，就这样解决掉了这个问题<br>哪里表达不准确欢迎大神指正~~~</p>
+
+        </div>
+        <hr />
+        <div class="col-12">
+            <div style="text-align: center">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                
+                <a class="btn btn-outline-info" href="/2016/10/29/粗体下同时设置UIButton的title和image会造成两者重叠/">上一篇</a>
+                
+                
+                <a class="btn btn-outline-info" href="/2016/10/29/runtime/">下一篇</a>
+                
+            </div>
+            </div>
+
+        </div>
+        <div id="comment-container">
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+    <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            id: md5(location.href), // 可选。默认为 location.href
+            owner: 'MurphLu',
+            repo: 'murphlu.github.io',
+            oauth: {
+                client_id: '01c3bc760286123e1272',
+                client_secret: '5c33b24d431b6a6193d31eff81f2d0ed3c15bdcb',
+            },
+        })
+        gitment.render('comment-container')
+    </script>
+</div>
+        </div>
+        <div class="container">
+            <div class="container">
+    <hr />
+    <p class="text-center">
+        
+        <a class="text-dark" target="_blank" href="https://github.com/MurphLu">
+            <i class="iconfont icon-github"></i>
+        </a>
+        
+        
+        <a class="text-dark" target="_blank" href="https://www.zhihu.com/people/jy-lu-59">
+            <i class="iconfont icon-zhihu"></i>
+        </a>
+        
+        
+        <a class="text-dark" target="_blank" href="https://weibo.com/HiGodl">
+            <i class="iconfont icon-sina"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://www.facebook.com/lijiyang.jyLu">
+            <i class="iconfont icon-facebook"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://mobile.twitter.com/jy_LuS">
+            <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://www.instagram.com/jiy_lulu">
+            <i class="iconfont icon-instagram"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://www.linkedin.com/in/继扬-陆-869a17124">
+            <i class="iconfont icon-linkedin"></i>
+        </a>
+        
+
+        <!---->
+
+        
+
+        
+
+    </p>
+    <p class="text-center text-muted footerFont">
+
+        © 2018 - 2019 Murph Lu | Powered by <a class="text-info" href="https://hexo.io">Hexo</a> |
+        <span id="busuanzi_container_site_uv">
+            visitor <span id="busuanzi_value_site_uv"></span>
+        </span>
+    </p>
+</div>
+        </div>
+    </div>
+</body>
+
+</html>

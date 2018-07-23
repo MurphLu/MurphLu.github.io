@@ -23,6 +23,7 @@
           href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/swift.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/ruby.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/bash.min.js"></script>
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
@@ -86,7 +87,9 @@
             
             <a class="text-secondary" href="/tags/iOS/" title="iOS">iOS</a>
             
-            <a class="text-secondary" href="/tags/webView/" title="webView">webView</a>
+            <a class="text-secondary" href="/tags/WKWebView/" title="WKWebView">WKWebView</a>
+            
+            <a class="text-secondary" href="/tags/Alert/" title="Alert">Alert</a>
             
             
         </span>
@@ -120,8 +123,7 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-</code></pre><p>####confirm</p>
-<pre><code>//作为js中confirm接口的实现，需要有提示信息以及两个相应事件， 确认及取消，并且在completionHandler中回传相应结果，确认返回YES， 取消返回NO
+</code></pre><h4 id="confirm"><a href="#confirm" class="headerlink" title="confirm"></a>confirm</h4><pre><code>//作为js中confirm接口的实现，需要有提示信息以及两个相应事件， 确认及取消，并且在completionHandler中回传相应结果，确认返回YES， 取消返回NO
 //参数 message为  js 方法 confirm(&lt;message&gt;) 中的&lt;message&gt;
 - (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler{
 
@@ -151,6 +153,20 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 </code></pre>
+        </div>
+        <hr />
+        <div class="col-12">
+            <div style="text-align: center">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                
+                <a class="btn btn-outline-info" href="/2017/12/01/iOS持续集成-Jenkins/">上一篇</a>
+                
+                
+                <a class="btn btn-outline-info" href="/2017/09/27/UIWebView-与JS交互，JSContext注入时机/">下一篇</a>
+                
+            </div>
+            </div>
+
         </div>
         <div id="comment-container">
         </div>

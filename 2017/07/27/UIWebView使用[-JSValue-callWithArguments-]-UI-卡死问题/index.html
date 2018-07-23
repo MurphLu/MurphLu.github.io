@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <title>
+        
+        UIWebView使用[-JSValue-callWithArguments-]-UI-卡死问题
+        
+    </title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.css"/>
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/swift.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/ruby.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/bash.min.js"></script>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="/js/md5.js"></script>
+
+    <link href="//at.alicdn.com/t/font_751236_90n6bpjkuko.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('pre code').each(function(i, block) {
+                hljs.highlightBlock(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="container">
+            <div class="navbar navbar-expand-sm navbar-light">
+    <a class="navbar-brand" href="#">
+        <img src="/img/ava.jpg" width="30" height="30" alt="">
+    </a>
+    <button class="navbar-toggler btn-sm border-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a href="/" class=" nav-link ">
+                    Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/archives" class=" nav-link ">
+                    Archives
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/about/" class=" nav-link ">
+                    about
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+        </div>
+        <hr />
+        <div class="container">
+            <div class="container">
+    <div>
+        <h5>
+            UIWebView使用[-JSValue-callWithArguments-]-UI-卡死问题
+        </h5>
+    </div>
+
+    <div class="postHeaderFontTime">
+        <span>2017-07-27 09:43:00</span>
+        <span>&nbsp&nbsp&nbsp</span>
+        
+        <span><span class="iconfont icon-tags"></span>
+            
+            <a class="text-secondary" href="/tags/iOS/" title="iOS">iOS</a>
+            
+            <a class="text-secondary" href="/tags/UIWebView/" title="UIWebView">UIWebView</a>
+            
+            <a class="text-secondary" href="/tags/JavascriptCore/" title="JavascriptCore">JavascriptCore</a>
+            
+            
+        </span>
+
+        <span>&nbsp&nbsp&nbsp</span>
+        <span class="iconfont icon-read"></span> <span class="text-secondary" id="busuanzi_value_page_pv"></span>
+    </div>
+    <hr />
+    <div class="post-content ">
+        <div class="markdown-body">
+            <p>最近一直在搞一个套壳的app，作为临时方案，并且为了能够使交互与安卓端统一，用的UIWebView，体验就不要说了，卡出翔。<br>在使用UIWebView的时候出现了这样一个问题，当使用[ JSValue callWithArguments:]方法时，如果调用的js方法有alert，就会导致UI卡死，alert点击无效，然后一顿google，stackoverflow。最终找到了解决方案。</p>
+<pre><code class="-Objective-C">//假如你要调用的js方法名称为 “test”
+//先获取webView中js上下文
+self.context = [webView valueForKeyPath:@&quot;documentView.webView.mainFrame.javaScriptContext&quot;];
+//获取js方法
+JSValue *jsFun = self.context[@&quot;test&quot;];
+//异步主线程执行js方法
+dispatch_async(dispatch_get_main_queue(), ^{
+//使用js的window.setTimeout方法执行需要调用的方法
+       [jsFun.context[@&quot;setTimeout&quot;] callWithArguments:@[jsFun, @0, args];
+ });
+</code></pre>
+<p>这里是该问题的具体描述及解决方案，具体原因还不是很理解，等研究过后再加补充，望各路大神指正<br><a href="https://stackoverflow.com/questions/22876528/calling-jsvalue-callwitharguments-locks-ui-when-alert-is-called" target="_blank" rel="noopener">https://stackoverflow.com/questions/22876528/calling-jsvalue-callwitharguments-locks-ui-when-alert-is-called</a></p>
+
+        </div>
+        <hr />
+        <div class="col-12">
+            <div style="text-align: center">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                
+                <a class="btn btn-outline-info" href="/2017/09/27/UIWebView-与JS交互，JSContext注入时机/">上一篇</a>
+                
+                
+                <a class="btn btn-outline-info" href="/2017/05/11/自定义ViewController切换动画/">下一篇</a>
+                
+            </div>
+            </div>
+
+        </div>
+        <div id="comment-container">
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+    <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            id: md5(location.href), // 可选。默认为 location.href
+            owner: 'MurphLu',
+            repo: 'murphlu.github.io',
+            oauth: {
+                client_id: '01c3bc760286123e1272',
+                client_secret: '5c33b24d431b6a6193d31eff81f2d0ed3c15bdcb',
+            },
+        })
+        gitment.render('comment-container')
+    </script>
+</div>
+        </div>
+        <div class="container">
+            <div class="container">
+    <hr />
+    <p class="text-center">
+        
+        <a class="text-dark" target="_blank" href="https://github.com/MurphLu">
+            <i class="iconfont icon-github"></i>
+        </a>
+        
+        
+        <a class="text-dark" target="_blank" href="https://www.zhihu.com/people/jy-lu-59">
+            <i class="iconfont icon-zhihu"></i>
+        </a>
+        
+        
+        <a class="text-dark" target="_blank" href="https://weibo.com/HiGodl">
+            <i class="iconfont icon-sina"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://www.facebook.com/lijiyang.jyLu">
+            <i class="iconfont icon-facebook"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://mobile.twitter.com/jy_LuS">
+            <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://www.instagram.com/jiy_lulu">
+            <i class="iconfont icon-instagram"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://www.linkedin.com/in/继扬-陆-869a17124">
+            <i class="iconfont icon-linkedin"></i>
+        </a>
+        
+
+        <!---->
+
+        
+
+        
+
+    </p>
+    <p class="text-center text-muted footerFont">
+
+        © 2018 - 2019 Murph Lu | Powered by <a class="text-info" href="https://hexo.io">Hexo</a> |
+        <span id="busuanzi_container_site_uv">
+            visitor <span id="busuanzi_value_site_uv"></span>
+        </span>
+    </p>
+</div>
+        </div>
+    </div>
+</body>
+
+</html>

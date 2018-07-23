@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <title>
+        
+        fastlane-踩坑
+        
+    </title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.css"/>
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/swift.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/ruby.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/bash.min.js"></script>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="/js/md5.js"></script>
+
+    <link href="//at.alicdn.com/t/font_751236_90n6bpjkuko.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('pre code').each(function(i, block) {
+                hljs.highlightBlock(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="container">
+            <div class="navbar navbar-expand-sm navbar-light">
+    <a class="navbar-brand" href="#">
+        <img src="/img/ava.jpg" width="30" height="30" alt="">
+    </a>
+    <button class="navbar-toggler btn-sm border-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a href="/" class=" nav-link ">
+                    Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/archives" class=" nav-link ">
+                    Archives
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/about/" class=" nav-link ">
+                    about
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+        </div>
+        <hr />
+        <div class="container">
+            <div class="container">
+    <div>
+        <h5>
+            fastlane-踩坑
+        </h5>
+    </div>
+
+    <div class="postHeaderFontTime">
+        <span>2018-02-13 15:50:00</span>
+        <span>&nbsp&nbsp&nbsp</span>
+        
+        <span><span class="iconfont icon-tags"></span>
+            
+            <a class="text-secondary" href="/tags/iOS/" title="iOS">iOS</a>
+            
+            <a class="text-secondary" href="/tags/UIViewController/" title="UIViewController">UIViewController</a>
+            
+            <a class="text-secondary" href="/tags/Animation/" title="Animation">Animation</a>
+            
+            
+        </span>
+
+        <span>&nbsp&nbsp&nbsp</span>
+        <span class="iconfont icon-read"></span> <span class="text-secondary" id="busuanzi_value_page_pv"></span>
+    </div>
+    <hr />
+    <div class="post-content ">
+        <div class="markdown-body">
+            <p>这个世界是懒人创造的。</p>
+<p>人懒了就会发明各种各样的工具，或者寻找各种各样能够给自己偷懒机会的工具，当然我还停留在使用各种工具的阶段。或者可能不是因为懒，只是为了我们的生活更方便。</p>
+<p>回到开发上，传统打包提测的过程比较恶心，尤其是iOS一个工程可能有不同的bundle ID，使用各种各样的配置环境，各种各样的证书打各种各样的包来给测试人员使用，然后会发现，在打包的时候要注意好多东西，各种配置，证书，bundle ID，如果项目复杂的话就会可能打出来的包并不是测试人员要的包，或者哪个地方设置有问题就还得重新打一遍，作为开发人员的我们很头疼的好吧。</p>
+<p>为了打包提测整个流程更方便，还有就是作为开发人员哪的我们把重点放在开发上而不是打包上，各种各样的自动打包构建提测工具就应运而生，我们本文提到的fastlane就是一种，集各种强大功能于一身，几乎可以解决我们打包提测整个流程的所有事情。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>这个就不多说了，参见官方文档就好了<a href="https://docs.fastlane.tools/getting-started/ios/setup/" target="_blank" rel="noopener">fastlane setup</a></p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>官方文档给出了两种语言初始化方法<br>默认的Ruby的，以及Swift的，由于Swift现在还是beta版本，所以我们还是选取Ruby版本<br>打开终端，cd到项目根目录</p>
+<pre><code>fastlane init
+</code></pre><p>执行完成之后会发现我们项目根目录多出了两个文件：<br>fastlane 文件夹——文件夹中包括Appfile（存储配置项，例如bundle ID，itunes_connect_id等），Fasefile（打包脚本）<br>Gemfile（Ruby的包管理工具，类似于iOS开发中的CocoaPods） 文本文件</p>
+<pre><code>fastlane action
+</code></pre><p>fastlane提供了好多的action，包括证书的创建管理（cert），provisioning profile的创建管理（sigh， match），自动截图，打测试包上传到TestFilght，打线上包上传到App Store，通过各种各样的插件或者action打各种各样的包，打包之前之后进行各种操作等等。。。。由于我这里用到的东西比较少，更多的功能可以自行挖掘<a href="https://docs.fastlane.tools/actions/" target="_blank" rel="noopener">fastlane actions</a></p>
+<h3 id="fastlane-Plugins"><a href="#fastlane-Plugins" class="headerlink" title="fastlane Plugins"></a>fastlane Plugins</h3><p>fastlane通过各种插件可以拓展更多的功能<a href="https://docs.fastlane.tools/plugins/available-plugins/" target="_blank" rel="noopener">available plugins</a></p>
+<pre><code>fastlane search_plugins [pluginName] #通过该命令查找插件
+</code></pre><pre><code>fastlane add_plugin [pluginName] # 通过该命令安装插件
+</code></pre><h3 id="fastlane-CocoaPods"><a href="#fastlane-CocoaPods" class="headerlink" title="fastlane CocoaPods"></a>fastlane CocoaPods</h3><p>fastlane默认支持CocoaPods，只需要在打包脚本中添加一行<code>cocoapods</code>就OK了，但是实际使用的时候可能会有问题，这个问题貌似跟Ruby使用Gem作为包管理方式有关，直接这样写得时候回提示找不到<code>Pod</code>，需要在项目根目录中我们做初始化的时候生成的<code>Gemfile</code>做一下配置</p>
+<pre><code class="Ruby">source &quot;https://gems.ruby-china.org/&quot;
+gem &quot;fastlane&quot;
+#配置cocoaPods，并指定版本
+gem &#39;cocoapods&#39;, &#39;1.3.1&#39;
+
+#引用Pluginfile，我们安装的插件都会在Pluginfile中引入
+plugins_path = File.join(File.dirname(__FILE__), &#39;fastlane&#39;, &#39;Pluginfile&#39;)
+eval_gemfile(plugins_path) if File.exist?(plugins_path)
+</code></pre>
+<p>添加完这一行再次运行就OK了。我们在使用CocoaPods的时候也可以传入一些参数，具体请参见官方文档<a href="https://docs.fastlane.tools/actions/cocoapods/#cocoapods" target="_blank" rel="noopener">CocoaPods</a>。</p>
+<h3 id="打包脚本"><a href="#打包脚本" class="headerlink" title="打包脚本"></a>打包脚本</h3><p>由于我们的App测试和发布都是使用的企业账号，所以fastlane并没有企业打包的默认配置，我们使用faselane推荐的<a href="https://docs.fastlane.tools/actions/gym/#gym" target="_blank" rel="noopener">gym</a>来进行打包<br>我们的App测试开发环境由于推送的种种问题，只能是通过设置两个Bundle ID的方式来实现两种环境的区分，所以，我们在打包之前需要做的事情有：</p>
+<ul>
+<li>更换Bundle ID</li>
+<li>更换打包描述文件</li>
+<li>可能还有版本号的变更<br>基于此，我们在每次打包之前需要替换掉工程中的Bundle ID，以及使用的描述文件。<br>经过测试，描述文件只有在使用sigh（本文中只测试了sigh），才能正常动态替换掉描述文件，否则需要手动在Xcode中该成指定的描述文件才可以，所以，我们使用了<a href="https://docs.fastlane.tools/actions/sigh/#sigh" target="_blank" rel="noopener">sigh</a>来管理描述文件。<pre><code>#为了不让我们的项目目录太乱，所以工程无关的文件我们就都输出到指定的目录，这样也方便统一管理
+# --adhoc 指定倒出那种描述文件
+fastlane sigh -o “~/PP/” --adhoc
+</code></pre>命令执行过程中会让你输入App ID Userame, Password<br>选择team， 输入项目Bundle ID，然后就会自动查找并下载安装描述文件，</li>
+</ul>
+<p>这样之后就可以在打包之前自动更换描述文件了。</p>
+<p>实际使用中发现仅仅使用<code>update_project_provisioning</code>这个方法是不行的，应为它的功能仅为替换描述文件，在设置App签名的时候需要指定是否为自动，描述文件，证书，teamID等，如果仅仅是替换描述文件的话是有问题的。<br>经过在官方文档查询又发现了另外一个方法<a href="https://docs.fastlane.tools/actions/automatic_code_signing/#automatic_code_signing" target="_blank" rel="noopener">automatic_code_signing</a>，这个可以在打包之前为我们详细的指定签名需要的一系列内容</p>
+<p>接下来是打包脚本：</p>
+<pre><code># 平台，安卓还是iOS
+default_platform(:ios) 
+
+# iOS进行的操作
+platform :ios do
+  desc &quot;Description of what the lane does&quot;
+  # 在执行lane之前进行的操作，例如我们在每次打包之前都执行一次pod install
+  before_all do
+    # faselane中pod install的操作
+      cocoapods
+  end
+
+  # 打包的lane操作，我们可以配置多个lane来打不同环境的包
+  lane :build_uat do |op|
+
+    # 打包之前更新bundle ID
+      update_info_plist(
+          plist_path:&quot;./projectName/SupportFiles/Info.plist&quot;,
+          app_identifier:&quot;com.example.id&quot;
+      )
+
+    # 打包之前跟新指定配置的描述文件
+      update_project_provisioning(
+        # 之前有sigh下载的描述文件存储路径
+          profile:&quot;./InHouse_com.example.id.mobileprovision&quot;,
+
+        # 打包配置，Debug，Release
+          build_configuration:&quot;Debug&quot;
+      )
+
+      automatic_code_signing(
+        # 工程文件所在路径
+        path:&quot;project.xcodeproj&quot;,
+        # 是否使用自动签名，这里如果是打包的话应该一般都为false吧，默认也是false
+        use_automatic_signing:false,
+        # 打包的team ID， 也就是打包使用的证书中的team ID，这个如果不知道是什么的话可以在xCode中设置好签名用的描述文件后到xcodeproj下的pbxproj文件中搜索“DEVELOPMENT_TEAM”，它的值就是了
+        team_id:&quot;teamID&quot;,
+        # 这个就不用说了，需要修改的targets
+        targets:&quot;target_name&quot;,
+        # 用哪种方式打包“iPhone Develop”还是“iPhone Distribution”
+        code_sign_identity:&quot;iPhone Distribution&quot;,
+        # 描述文件名称， 也就是使用哪个描述文件打包
+        profile_name:&quot;profile_name&quot;
+    )
+
+      currentTime = Time.new.strftime(&quot;%Y-%m-%d-%H-%M&quot;)
+      outputDirectory = &quot;./uat/#{currentTime}&quot;
+      logDirectory = &quot;#{outputDirectory}/fastlanelog&quot;
+      gym(
+        # 打包方式，enterprise, adhoc,appstore,development
+          export_method: &quot;enterprise&quot;,
+          scheme: &quot;scheme&quot;,
+        # pod 生成的workspace文件
+          workspace:&quot;project.xcworkspace&quot;,
+        # 输出文件夹
+          output_directory: outputDirectory,
+        # 输出包名称
+          output_name:&quot;app.ipa&quot;,
+
+        # 打包前是否clean
+          clean:true,
+          silent:true,
+        # 打包的配置 Debug Release
+          configuration:&quot;Debug&quot;,
+        # 打包日志输出文件夹
+          buildlog_path:logDirectory,
+        # 打包证书
+          codesigning_identity:&#39;iPhone Distribution: .........&#39;,
+        # Xcode 9 默认不允许访问钥匙串的内容,必须要设置此项才可以，运行过程可能会提示是否允许访问钥匙串，需要输入电脑密码
+          export_xcargs: &quot;-allowProvisioningUpdates&quot;,
+        # 导出选项
+          export_options:{ 
+            # 打包导出时可选描述文件 &quot;bundleID&quot;=&gt;&quot;描述文件名称&quot;
+              provisioningProfiles: {
+                &quot;com.example.id&quot; =&gt; &quot;InHouse_com.example.id&quot;,
+            },
+
+            # inHouse发布时需要的manifest.plist文件中需要配置的项
+            manifest: {
+                appURL: &quot;https://example.com/app.ipa&quot;,
+                displayImageURL: &quot;https://example.com/app.png&quot;,
+                fullSizeImageURL: &quot;https://example.com/app.png&quot;,
+              },
+        }
+      )
+  end
+
+  # 当lane执行完成之后进行哪些操作
+  after_all do |lane|
+
+  end
+
+  error do |lane, exception|
+  end
+
+end
+</code></pre><p>实际使用过程中打包的时候发现会失败，大概报的是这么一个错，里面的Each是一个pod库</p>
+<pre><code>Code Signing Error: Each does not support provisioning profiles. Each does not support provisioning profiles, but provisioning profile NO_SIGNING/ has been manually specified. Set the provisioning profile value to &quot;Automatic&quot; in the build settings editor.
+</code></pre><p>大概就是pod的库不需要签名，但是默认却给他进行签名了，这样就会有问题，然后在fastlane的github的<a href="https://github.com/fastlane/fastlane/issues/10543" target="_blank" rel="noopener">issue</a>中找到了这样的解决办法：</p>
+<pre><code class="Ruby"># 将下面代码添加到我们的podfile文件中
+post_install do |installer| installer.pods_project.build_configurations.each do |config| config.build_settings[&#39;PROVISIONING_PROFILE_SPECIFIER&#39;] = &#39;&#39; end end
+</code></pre>
+<p>具体的解释是这样的：<br><img src="http://upload-images.jianshu.io/upload_images/1648999-dc9257a8acc3d584.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>然后，在我的podfile中贴上了上面那段代码然后就神奇的好了。</p>
+<p>之后就在终端中cd到我们的工程跟目录执行</p>
+<pre><code>fastlane build_uat(lane_name)
+</code></pre><p>然后就该干嘛干嘛去了，不用再等待Xcode漫长的打包过程<br>然后我们可以将faselane与Jenkins等等工具结合起来，打包的时候只需要打开网页点下按钮，其他的都让程序自动帮我们打出各种包，上传到各种地方或者直接发布，通过各种方式告诉测试人员，而且程序做这些事情要比人更靠谱，毕竟不会出现低级错误。</p>
+<p>今天尝试了一下通过插件把蒲公英或fir搞进来，最后发现两个插件最后都没能成功运行，还在继续折腾中，等好了继续更新</p>
+<p>几乎把我遇到的坑都一一列举了，如果有其他问题请留言，如果那里表达有问题希望大神指正~~</p>
+
+        </div>
+        <hr />
+        <div class="col-12">
+            <div style="text-align: center">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                
+                
+                <a class="btn btn-outline-info" href="/2018/01/17/UILabel之Inset/">下一篇</a>
+                
+            </div>
+            </div>
+
+        </div>
+        <div id="comment-container">
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+    <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            id: md5(location.href), // 可选。默认为 location.href
+            owner: 'MurphLu',
+            repo: 'murphlu.github.io',
+            oauth: {
+                client_id: '01c3bc760286123e1272',
+                client_secret: '5c33b24d431b6a6193d31eff81f2d0ed3c15bdcb',
+            },
+        })
+        gitment.render('comment-container')
+    </script>
+</div>
+        </div>
+        <div class="container">
+            <div class="container">
+    <hr />
+    <p class="text-center">
+        
+        <a class="text-dark" target="_blank" href="https://github.com/MurphLu">
+            <i class="iconfont icon-github"></i>
+        </a>
+        
+        
+        <a class="text-dark" target="_blank" href="https://www.zhihu.com/people/jy-lu-59">
+            <i class="iconfont icon-zhihu"></i>
+        </a>
+        
+        
+        <a class="text-dark" target="_blank" href="https://weibo.com/HiGodl">
+            <i class="iconfont icon-sina"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://www.facebook.com/lijiyang.jyLu">
+            <i class="iconfont icon-facebook"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://mobile.twitter.com/jy_LuS">
+            <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://www.instagram.com/jiy_lulu">
+            <i class="iconfont icon-instagram"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://www.linkedin.com/in/继扬-陆-869a17124">
+            <i class="iconfont icon-linkedin"></i>
+        </a>
+        
+
+        <!---->
+
+        
+
+        
+
+    </p>
+    <p class="text-center text-muted footerFont">
+
+        © 2018 - 2019 Murph Lu | Powered by <a class="text-info" href="https://hexo.io">Hexo</a> |
+        <span id="busuanzi_container_site_uv">
+            visitor <span id="busuanzi_value_site_uv"></span>
+        </span>
+    </p>
+</div>
+        </div>
+    </div>
+</body>
+
+</html>

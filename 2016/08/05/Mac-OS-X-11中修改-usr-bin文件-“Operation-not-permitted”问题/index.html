@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <title>
+        
+        Mac OS X 11中修改/usr/bin文件 “Operation not permitted”问题
+        
+    </title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.css"/>
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/swift.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/ruby.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/bash.min.js"></script>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="/js/md5.js"></script>
+
+    <link href="//at.alicdn.com/t/font_751236_90n6bpjkuko.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('pre code').each(function(i, block) {
+                hljs.highlightBlock(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="container">
+            <div class="navbar navbar-expand-sm navbar-light">
+    <a class="navbar-brand" href="#">
+        <img src="/img/ava.jpg" width="30" height="30" alt="">
+    </a>
+    <button class="navbar-toggler btn-sm border-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a href="/" class=" nav-link ">
+                    Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/archives" class=" nav-link ">
+                    Archives
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/about/" class=" nav-link ">
+                    about
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+        </div>
+        <hr />
+        <div class="container">
+            <div class="container">
+    <div>
+        <h5>
+            Mac OS X 11中修改/usr/bin文件 “Operation not permitted”问题
+        </h5>
+    </div>
+
+    <div class="postHeaderFontTime">
+        <span>2016-08-05 10:43:00</span>
+        <span>&nbsp&nbsp&nbsp</span>
+        
+        <span><span class="iconfont icon-tags"></span>
+            
+            <a class="text-secondary" href="/tags/MacOS/" title="MacOS">MacOS</a>
+            
+            
+        </span>
+
+        <span>&nbsp&nbsp&nbsp</span>
+        <span class="iconfont icon-read"></span> <span class="text-secondary" id="busuanzi_value_page_pv"></span>
+    </div>
+    <hr />
+    <div class="post-content ">
+        <div class="markdown-body">
+            <p>这两天研究<code>class-dump</code>，本来是想把它放到<code>user/bin</code>下用<code>Terminal</code>打开的，无奈考不进去，发现Max OS X11之后在内核下引入了Rootless机制，以下路径</p>
+<pre><code>
+/System
+/bin
+/sbin
+/usr (except /usr/local)
+</code></pre><p>即使是root用户也不能随意修改，这就有点尴尬了。。<br>于是，本着曲线救国的态度，我在个人用户文件夹下建了个隐藏文件夹，然后将哪些想用<code>Terminal</code>打开的东西全都丢在那个文件夹下了，然后将这个路径再加到<code>path</code>里，ok，大功告成。<br>有的小伙伴要问了，<code>path</code>怎么修改啊，接下来我再顺便提一下mac环境变量修改的方法：</p>
+<blockquote>
+<p>1、打开<code>Terminal</code><br>2、输入<code>vim /Users/{用户名}/.bash_profile</code><br>3、然后vim编辑器就打开了，里面有一堆的环境变量，如图1<br>4、然后输入<code>i</code>进入编辑模式<br>5、然后按照文件中已有的环境变量格式输入自己之前建好的文件夹就ok啦，如图2，添加上自己的path路径<br>6、最后按<code>esc</code>，输入<code>:</code>(冒号)，<code>wq</code>，然后回车保存写好的文件<br>7、执行<code>source /Users/{用户名}/.bash_profile</code>，重新加载环境变量使修改生效<br>8、试试你拖进去的东西是不是可以用<code>Terminal</code>打开了~~~~</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1648999-e79499e22360fc68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图1"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1648999-8001d89d7e3c0fcf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图2"></p>
+<p>在网上也看到了用关闭<code>Rootless</code>的方法可以实现解锁那些限制路径的修改，个人感觉非必须情况下还是不要解锁了，虽然安全问题可能涉及不到多少，但是系统级的东西我是能少修改就少修改，，胆小。。而且小白一个怕改东西改坏了就完蛋了.之前改环境变量就改坏过，还好有方法可以改回来<br>当然你要是想解锁权限的话也很简单：  </p>
+<blockquote>
+<p>重启，开机按住Command + R，以Recovery分区启动<br>找到终端，打开，输入：<code>csrutil disable</code>  ，重启后再操作就可以了，操作完记得再设置为<code>enable</code></p>
+</blockquote>
+<p>我再啰嗦一下把环境变量问题导致<code>Terminal</code>基本不能用的解决办法吧。</p>
+<blockquote>
+<p>1、在命令行中输入：<code>export PATH=/usr/bin:/usr/sbin:/bin:/sbin:/usr/X11R6/bin</code>（这样可以保证命令行命令暂时可以使用。命令执行完之后先不要关闭终端）<br>2、输入：<code>cd ~/</code>（进入当前用户的home目录）<br>3、输入<code>vim .bash_profile</code> (打开后把错误的地方修改过来就OK了)，退出vim并保存文件<br>4、此时在命令行中输入更新命令(命令行一直不要关):<code>source .bash_profile</code><br>5、关闭<code>Terminal</code>再重新打开一个窗口，看一下<code>Terminal</code>是不是又可以用啦</p>
+</blockquote>
+<p>最后这个忘了在哪摘的了，如果发现是你写的请联系下我，我注一下出处~~~</p>
+
+        </div>
+        <hr />
+        <div class="col-12">
+            <div style="text-align: center">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                
+                <a class="btn btn-outline-info" href="/2016/10/20/TCP连接三次握手四次挥手/">上一篇</a>
+                
+                
+                <a class="btn btn-outline-info" href="/2016/06/03/iOS-中TextField改变secureTextEntry改变前后字体不同问题/">下一篇</a>
+                
+            </div>
+            </div>
+
+        </div>
+        <div id="comment-container">
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+    <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            id: md5(location.href), // 可选。默认为 location.href
+            owner: 'MurphLu',
+            repo: 'murphlu.github.io',
+            oauth: {
+                client_id: '01c3bc760286123e1272',
+                client_secret: '5c33b24d431b6a6193d31eff81f2d0ed3c15bdcb',
+            },
+        })
+        gitment.render('comment-container')
+    </script>
+</div>
+        </div>
+        <div class="container">
+            <div class="container">
+    <hr />
+    <p class="text-center">
+        
+        <a class="text-dark" target="_blank" href="https://github.com/MurphLu">
+            <i class="iconfont icon-github"></i>
+        </a>
+        
+        
+        <a class="text-dark" target="_blank" href="https://www.zhihu.com/people/jy-lu-59">
+            <i class="iconfont icon-zhihu"></i>
+        </a>
+        
+        
+        <a class="text-dark" target="_blank" href="https://weibo.com/HiGodl">
+            <i class="iconfont icon-sina"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://www.facebook.com/lijiyang.jyLu">
+            <i class="iconfont icon-facebook"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://mobile.twitter.com/jy_LuS">
+            <i class="iconfont icon-twitter"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://www.instagram.com/jiy_lulu">
+            <i class="iconfont icon-instagram"></i>
+        </a>
+        
+
+        
+        <a class="text-dark" target="_blank" href="https://www.linkedin.com/in/继扬-陆-869a17124">
+            <i class="iconfont icon-linkedin"></i>
+        </a>
+        
+
+        <!---->
+
+        
+
+        
+
+    </p>
+    <p class="text-center text-muted footerFont">
+
+        © 2018 - 2019 Murph Lu | Powered by <a class="text-info" href="https://hexo.io">Hexo</a> |
+        <span id="busuanzi_container_site_uv">
+            visitor <span id="busuanzi_value_site_uv"></span>
+        </span>
+    </p>
+</div>
+        </div>
+    </div>
+</body>
+
+</html>
