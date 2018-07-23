@@ -120,7 +120,20 @@
         <div id="comment-container">
         </div>
     </div>
-
+    <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+    <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            id: 'location.href', // 可选。默认为 location.href
+            owner: 'MurphLu',
+            repo: 'https://github.com/MurphLu/MurphLu.github.io.git',
+            oauth: {
+                client_id: '01c3bc760286123e1272',
+                client_secret: '5c33b24d431b6a6193d31eff81f2d0ed3c15bdcb',
+            },
+        })
+        gitment.render('comment-container')
+    </script>
 </div>
         </div>
         <div class="container">
