@@ -136,7 +136,7 @@ fastlane sigh -o “~/PP/” --adhoc
 <p>这样之后就可以在打包之前自动更换描述文件了。</p>
 <p>实际使用中发现仅仅使用<code>update_project_provisioning</code>这个方法是不行的，应为它的功能仅为替换描述文件，在设置App签名的时候需要指定是否为自动，描述文件，证书，teamID等，如果仅仅是替换描述文件的话是有问题的。<br>经过在官方文档查询又发现了另外一个方法<a href="https://docs.fastlane.tools/actions/automatic_code_signing/#automatic_code_signing" target="_blank" rel="noopener">automatic_code_signing</a>，这个可以在打包之前为我们详细的指定签名需要的一系列内容</p>
 <p>接下来是打包脚本：</p>
-<pre><code># 平台，安卓还是iOS
+<pre><code class="Ruby"># 平台，安卓还是iOS
 default_platform(:ios) 
 
 # iOS进行的操作
@@ -232,7 +232,8 @@ platform :ios do
   end
 
 end
-</code></pre><p>实际使用过程中打包的时候发现会失败，大概报的是这么一个错，里面的Each是一个pod库</p>
+</code></pre>
+<p>实际使用过程中打包的时候发现会失败，大概报的是这么一个错，里面的Each是一个pod库</p>
 <pre><code>Code Signing Error: Each does not support provisioning profiles. Each does not support provisioning profiles, but provisioning profile NO_SIGNING/ has been manually specified. Set the provisioning profile value to &quot;Automatic&quot; in the build settings editor.
 </code></pre><p>大概就是pod的库不需要签名，但是默认却给他进行签名了，这样就会有问题，然后在fastlane的github的<a href="https://github.com/fastlane/fastlane/issues/10543" target="_blank" rel="noopener">issue</a>中找到了这样的解决办法：</p>
 <pre><code class="Ruby"># 将下面代码添加到我们的podfile文件中

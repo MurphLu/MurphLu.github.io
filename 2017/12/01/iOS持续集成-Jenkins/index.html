@@ -99,25 +99,24 @@
     <div class="post-content ">
         <div class="markdown-body">
             <p>最近真的是各种奇葩需求各种提，单位恨不得每个产品都要单独搞一个App来支持，So每次打包提测都是超级痛苦，一次n多个包每个包又有两三个环境，每次搞得头都大了，于是研究了下持续集成，Jenkins这个最近很火的持续集成和持续交付工具当然是首选了。</p>
-<p>##安装<br>对于安装我就不多说了，网上一搜一大堆，官方教程也很详细，直接去看就好了<a href="https://jenkins.io/doc/pipeline/tour/getting-started/" target="_blank" rel="noopener">Jenkins安装</a></p>
-<p>###新建工程<br>这个其实很多文章也都写的很详细了，登录后选择“新建”， 输入项目名称，选择“构建一个自由风格的软件项目”， 点击ok就好了<br><img src="http://upload-images.jianshu.io/upload_images/1648999-e005c2bea06f0d50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="新建项目.png"></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>对于安装我就不多说了，网上一搜一大堆，官方教程也很详细，直接去看就好了<a href="https://jenkins.io/doc/pipeline/tour/getting-started/" target="_blank" rel="noopener">Jenkins安装</a></p>
+<h3 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h3><p>这个其实很多文章也都写的很详细了，登录后选择“新建”， 输入项目名称，选择“构建一个自由风格的软件项目”， 点击ok就好了<br><img src="http://upload-images.jianshu.io/upload_images/1648999-e005c2bea06f0d50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="新建项目.png"></p>
 <p>新建完之后界面大概就是这样的</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1648999-03f83096535b72ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="建好的空项目.png"></p>
-<p>###General<br>这里可以设置一些项目基本信息，构建后的项目保存的时间等等，这里就不过多介绍了，不是必填项，怎么感觉到现在为止还啥都写，一路略过来😂。。</p>
-<p>###源码管理<br>这里可以设置None， Git， Svn</p>
+<h3 id="General"><a href="#General" class="headerlink" title="General"></a>General</h3><p>这里可以设置一些项目基本信息，构建后的项目保存的时间等等，这里就不过多介绍了，不是必填项，怎么感觉到现在为止还啥都写，一路略过来😂。。</p>
+<h3 id="源码管理"><a href="#源码管理" class="headerlink" title="源码管理"></a>源码管理</h3><p>这里可以设置None， Git， Svn</p>
 <p>None就不说了，没有源码管理，不必从网上check<br>Git：<br>输入Url， Credentials， Branches就好了<br><img src="http://upload-images.jianshu.io/upload_images/1648999-2d1df0ff8dca3fc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="git.png"></p>
 <p>SVN：<br>跟git差不多<br><img src="http://upload-images.jianshu.io/upload_images/1648999-57fbfd22542ef410.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="svn.png"></p>
-<p>###构建触发<br>这里可以通过一些方法自动触发构建操作，而不需要通过登录到jenkins手动触发构建，同样不多介绍</p>
-<p>###构建环境<br>由于我在后边构建中使用的是shell，没有使用jenkins提供的插件，所以这一步没过多研究<br>不过我发现在这里有些blog上使用插件构建的时候在选择“Keychains and Code Signing Identities”以及“Mobile Provisioning Profiles”这两个地方的描述有些不负责任。<br>在升级到Sierra之后是无法获取到<code>login.keychain</code>的，<code>/Users/murphlu/Library/Keychains</code>目录下找到的只有<code>.keychain-db</code>文件，这个文件jenkins的插件是识别不到的(我找了好多人写的所谓的解决方法，并没有成功解决这个问题，如果有谁有亲测可行的方法也希望能指正)，这也是为啥我选择了使用xcodebuild在shell中直接写，而不是用jenkins的插件“Xcode integration”去实现自动打包。<br>使用xcodebuild通过shell实现自动打包也是有好处的，可控性要高一些，我们可以知道我们每一步都在做什么。这一步同样略过。</p>
-<p>###构建</p>
-<p>敲黑板， 重点来了~~</p>
+<h3 id="构建触发"><a href="#构建触发" class="headerlink" title="构建触发"></a>构建触发</h3><p>这里可以通过一些方法自动触发构建操作，而不需要通过登录到jenkins手动触发构建，同样不多介绍</p>
+<h3 id="构建环境"><a href="#构建环境" class="headerlink" title="构建环境"></a>构建环境</h3><p>由于我在后边构建中使用的是shell，没有使用jenkins提供的插件，所以这一步没过多研究<br>不过我发现在这里有些blog上使用插件构建的时候在选择“Keychains and Code Signing Identities”以及“Mobile Provisioning Profiles”这两个地方的描述有些不负责任。<br>在升级到Sierra之后是无法获取到<code>login.keychain</code>的，<code>/Users/murphlu/Library/Keychains</code>目录下找到的只有<code>.keychain-db</code>文件，这个文件jenkins的插件是识别不到的(我找了好多人写的所谓的解决方法，并没有成功解决这个问题，如果有谁有亲测可行的方法也希望能指正)，这也是为啥我选择了使用xcodebuild在shell中直接写，而不是用jenkins的插件“Xcode integration”去实现自动打包。<br>使用xcodebuild通过shell实现自动打包也是有好处的，可控性要高一些，我们可以知道我们每一步都在做什么。这一步同样略过。</p>
+<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>敲黑板， 重点来了~~</p>
 <p>首先，如果是pod项目，可以通过添加 Update CocoaPods 确保在打包之前我们的 pod 是正常状态，当然如果每次都执行pod update过慢的话可以略过这一步，直接看下面</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1648999-1dd77dc0634df70f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="pod.png"></p>
 <p>构建中我们选择“增加构建步骤” &gt; “Execute shell”<br><img src="http://upload-images.jianshu.io/upload_images/1648999-fe678e7332229384.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="新增构建步骤.png"></p>
 <p>在这里你可以自由发挥，终端的命令都可以用在这里，如果需要哪些东西可以现在终端测试通过了再直接粘过来。</p>
 <p>如果没有使用Update CocoaPods这个步骤，那么我们可以通过使用shell来执行pod命令<br><code>pod install --verbose --no-repo-update</code></p>
 <p>pod完成之后我们来开始我们的打包步骤：<br>最主要的就是<code>xcodebuild archive</code>, <code>xcodebuild -exportArchive</code>这两个命令</p>
-<pre><code class="shell"># scheme变量, 后边用的地方比较多，使用变量比较方便
+<pre><code class="Ruby"># scheme变量, 后边用的地方比较多，使用变量比较方便
 SCHEME=testScheme
 #获取系统时间，每次打包后放在打包时间的文件夹下，这样比较好区分
 DATE=`date &#39;+%Y-%m-%d_%H:%M:%S&#39;`
