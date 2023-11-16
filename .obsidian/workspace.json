@@ -1,0 +1,164 @@
+{
+  "main": {
+    "id": "65eb967546f68033",
+    "type": "split",
+    "children": [
+      {
+        "id": "9750479987167fc6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3928a7a10fe145c2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/daily/2023-11-16.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "823a633e2094a5a0",
+    "type": "split",
+    "children": [
+      {
+        "id": "ccabc46b9196820d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a94f6529e426ea02",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "1e7b6c905ee73a54",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "13968d8e6fe62fc2",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "4eb3b16bf58c122a",
+    "type": "split",
+    "children": [
+      {
+        "id": "500f3cb8c463112f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a3b275b503ee1364",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "docs/daily/2023-11-16.md",
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "b6347f764c1f9999",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "docs/daily/2023-11-16.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "3a3d232535c986a8",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "3c9fb0f8fd7133fa",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "docs/daily/2023-11-16.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 457.5,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "3928a7a10fe145c2",
+  "lastOpenFiles": [
+    "docs/daily",
+    "docs/daily/2023-11-16.md",
+    "docs/Web/Vue/Vue Up And Run/Chapter 6 使用 vuex实现状态管理.md",
+    "docs/Web/Vue/Vue Up And Run/Chapter 7. Vuex 进阶.md",
+    "docs/Web/Vue/Vue Up And Run/Chapter 1. Vue 基础.md",
+    "docs/Java/Spring/init.md",
+    "docs/Java/Java基础/init.md",
+    "docs/iOS/init.md",
+    "Untitled 1.canvas",
+    "Untitled.canvas",
+    "docs/index.md",
+    "README.md"
+  ]
+}
