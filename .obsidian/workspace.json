@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "9750479987167fc6",
+        "id": "3819ab981805f41c",
         "type": "tabs",
         "children": [
           {
-            "id": "3928a7a10fe145c2",
+            "id": "7840b134fdda28cc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/daily/2023-11-16.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -85,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/daily/2023-11-16.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/daily/2023-11-16.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "docs/daily/2023-11-16.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -146,9 +138,47 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3928a7a10fe145c2",
+  "active": "7840b134fdda28cc",
   "lastOpenFiles": [
-    "docs/daily",
+    "docs/iOS/底层原理/src/thread_keep_alive/SLPermenantThread.m",
+    "docs/iOS/底层原理/src/thread_keep_alive/SLPermenantThread.h",
+    "docs/iOS/底层原理/src/thread_keep_alive",
+    "docs/iOS/底层原理/src/timer/ProxyWithNSProxy.m",
+    "docs/iOS/底层原理/src/timer/ProxyWithNSProxy.h",
+    "docs/iOS/底层原理/src/timer/ProxyObj.m",
+    "docs/iOS/底层原理/src/timer/ProxyObj.h",
+    "docs/iOS/底层原理/src/timer/GCDTimer.m",
+    "docs/iOS/底层原理/src/timer/GCDTimer.h",
+    "docs/iOS/底层原理/src/timer/CADisplayLinkDemo.m",
+    "docs/iOS/底层原理/src/timer/CADisplayLinkDemo.h",
+    "docs/iOS/底层原理/assets/BLOCK/demo.png",
+    "docs/iOS/底层原理/assets/BLOCK/block_forwarding.jpg",
+    "docs/iOS/底层原理/assets/WWDC2020/memory_map.png",
+    "docs/iOS/底层原理/assets/WWDC2020/relative_offset.png",
+    "docs/iOS/底层原理/assets/WWDC2020/class_rw_t.png",
+    "docs/iOS/底层原理/assets/WWDC2020/class_rw_ext_t.png",
+    "docs/iOS/底层原理/assets/WWDC2020/class_rw_count.png",
+    "docs/iOS/底层原理/assets/WWDC2020/class_ro_t.png",
+    "docs/iOS/底层原理/assets/WWDC2020/class_image.png",
+    "docs/iOS/底层原理/assets/WWDC2020/appkit_method.png",
+    "docs/iOS/底层原理/02-类对象.md",
+    "docs/iOS/底层原理/13-优化.md",
+    "docs/iOS/底层原理/12-内存管理.md",
+    "docs/iOS/底层原理/WWDC2020.md",
+    "docs/iOS/底层原理/10-runloop.md",
+    "docs/iOS/底层原理/03-isa、class、superClass.md",
+    "docs/iOS/底层原理/08-block.md",
+    "docs/iOS/底层原理/01-OC 对象的本质.md",
+    "docs/iOS/底层原理/06-Category.md",
+    "docs/iOS/底层原理/04-KVO.md",
+    "docs/iOS/底层原理/InterviewQuestions.md",
+    "docs/iOS/底层原理/11-多线程.md",
+    "docs/iOS/底层原理/05-KVC.md",
+    "docs/iOS/底层原理/09-runtime.md",
+    "docs/iOS/底层原理/14-应用程序加载.md",
+    "docs/iOS/底层原理/07-关联对象.md",
+    "Untitled 1.canvas",
+    "Untitled.canvas",
     "docs/daily/2023-11-16.md",
     "docs/Web/Vue/Vue Up And Run/Chapter 6 使用 vuex实现状态管理.md",
     "docs/Web/Vue/Vue Up And Run/Chapter 7. Vuex 进阶.md",
@@ -156,8 +186,6 @@
     "docs/Java/Spring/init.md",
     "docs/Java/Java基础/init.md",
     "docs/iOS/init.md",
-    "Untitled 1.canvas",
-    "Untitled.canvas",
     "docs/index.md",
     "README.md"
   ]
