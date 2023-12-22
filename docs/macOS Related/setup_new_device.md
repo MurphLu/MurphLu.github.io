@@ -11,15 +11,21 @@ killall finder
 
 ### brew 包管理工具
 
-`sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+```
+sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
 ### zsh 
 
-`sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
+```
+sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
 
 ### shell correct
 
-`brew install thefuck`
+```
+brew install thefuck
+```
 
 ### ruby version manager, 
 
@@ -27,24 +33,35 @@ killall finder
 > macOS build-in ruby may not proide some of the header files, 
 > which will cause some of the gem lib such as: cocapods fastlane fail install
 
-`brew install rbenv`
+```
+brew install rbenv
+```
 
 > add eval "$(rbenv init -)" into shell config file like: ".bash_profile", ".zshrc" etc.
 
-`rbenv install 2.7.8`
-`rbenv global 2.7.8`
+
+```
+rbenv install 2.7.8
+rbenv global 2.7.8
+```
 
 ### nvm node version manager
 
-`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash`
 
-`nvm install 12/14/16`
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+nvm install 12/14/16
+```
 
 ### a simple http-server，
 
 you can use it to start up a simple http server (transform files in interal network or something else)
 
-`npm install http-server -g`
+
+```
+npm install http-server -g
+```
 
 ### 腾讯垃圾清理工具
 
