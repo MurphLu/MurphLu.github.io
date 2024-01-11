@@ -9,7 +9,7 @@ RMagick是Ruby语言跟ImageMagick图形处理程序之间的接口，Ruby程序
 
  #### code
 
- ```Ruby
+ ``` Ruby
  # 当然要使用 rmagick 需要在电脑安装 imagemagick
 require 'rmagick'
 def 2pdf 
