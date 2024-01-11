@@ -7,7 +7,7 @@ RMagick是Ruby语言跟ImageMagick图形处理程序之间的接口，Ruby程序
  > *density*，每英寸内像素点数，越大图片质量越高，默认 75
  > *quality*，图片质量，1-100，越大质量越高
 
- #### code
+#### code
 
 ``` Ruby
 # 当然要使用 rmagick 需要在电脑安装 imagemagick

@@ -4,6 +4,7 @@ site_name: Murph's NoteBook
 site_url: https://murphlu.github.io/
 theme:
   name: material
+  highlightjs: true
   features:
     - navigation.tabs
     - navigation.tabs.sticky
