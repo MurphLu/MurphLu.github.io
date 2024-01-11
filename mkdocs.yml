@@ -5,6 +5,13 @@ site_url: https://murphlu.github.io/
 theme:
   name: material
   highlightjs: true
+  assets:
+    javascript:
+      - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js
+
+  stylesheets:
+    - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css
+
   features:
     - navigation.tabs
     - navigation.tabs.sticky
@@ -31,3 +38,14 @@ theme:
 
 plugins:
   - search
+
+# markdown_extensions:
+#   - pymdownx.highlight:
+#       use_pygments: true
+#       linenums: true
+extra_javascript:
+  - javascripts/highlight.min.js
+  - javascripts/highlightjs-line-numbers.min.js
+  - javascripts/highlight.js
+extra_css:
+  - javascripts/highlight.min.css
