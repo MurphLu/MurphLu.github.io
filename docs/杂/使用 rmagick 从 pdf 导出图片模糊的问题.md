@@ -4,8 +4,8 @@ RMagick是Ruby语言跟ImageMagick图形处理程序之间的接口，Ruby程序
 #### pdf 转 image 图片模糊
 
 可以通过image 的两个参数来调整：
- > density，每英寸内像素点数，越大图片质量越高，默认 75
- > quality，图片质量，1-100，越大质量越高
+ > *density*，每英寸内像素点数，越大图片质量越高，默认 75
+ > *quality*，图片质量，1-100，越大质量越高
 
  #### code
 
@@ -39,5 +39,7 @@ def 2pdf
 end
  ```
 
- [imageMagic](https://imagemagick.org)
+ > imageMagic 官网： [imageMagic](https://imagemagick.org)
+
+ > rmagick doc： [rmagick](https://rmagick.github.io/index.html)
 
