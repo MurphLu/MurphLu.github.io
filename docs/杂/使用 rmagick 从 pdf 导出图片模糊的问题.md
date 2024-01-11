@@ -9,8 +9,8 @@ RMagick是Ruby语言跟ImageMagick图形处理程序之间的接口，Ruby程序
 
  #### code
 
- ``` Ruby
- # 当然要使用 rmagick 需要在电脑安装 imagemagick
+``` Ruby
+# 当然要使用 rmagick 需要在电脑安装 imagemagick
 require 'rmagick'
 def 2pdf 
     # 读取当前文件夹中的 pdf 文件
@@ -37,7 +37,7 @@ def 2pdf
         end
     end
 end
- ```
+```
 
  > imageMagic 官网： [imageMagic](https://imagemagick.org)
 
