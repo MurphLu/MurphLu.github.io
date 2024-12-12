@@ -4,15 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "3819ab981805f41c",
+        "id": "96663f4d3b3f5bd8",
         "type": "tabs",
         "children": [
           {
-            "id": "7840b134fdda28cc",
+            "id": "5250b568c9d55750",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "docs/杂/使用 rmagick 从 pdf 导出图片模糊的问题.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "使用 rmagick 从 pdf 导出图片模糊的问题"
             }
           }
         ]
@@ -35,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -50,7 +58,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -58,14 +68,16 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 220.5
   },
   "right": {
     "id": "4eb3b16bf58c122a",
@@ -81,6 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "docs/杂/使用 rmagick 从 pdf 导出图片模糊的问题.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,7 +101,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for 使用 rmagick 从 pdf 导出图片模糊的问题"
             }
           },
           {
@@ -97,9 +112,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "docs/杂/使用 rmagick 从 pdf 导出图片模糊的问题.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from 使用 rmagick 从 pdf 导出图片模糊的问题"
             }
           },
           {
@@ -110,7 +128,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -118,7 +138,11 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "docs/杂/使用 rmagick 从 pdf 导出图片模糊的问题.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of 使用 rmagick 从 pdf 导出图片模糊的问题"
             }
           }
         ]
@@ -135,11 +159,20 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "publish:Publish changes...": false
     }
   },
-  "active": "7840b134fdda28cc",
+  "active": "5250b568c9d55750",
   "lastOpenFiles": [
+    "docs/杂/shell遍历文件夹中文件并重命名.md",
+    "docs/daily/2023-11-16.md",
+    "docs/Web/Vue/Vue Up And Run/Chapter 1. Vue 基础.md",
+    "README.md",
+    "docs/macOS Related/setup_new_device.md",
+    "docs/Java/Spring/init.md",
+    "docs/杂/postgreSQL配置远程访问.md",
+    "docs/杂/使用 rmagick 从 pdf 导出图片模糊的问题.md",
     "draw/树状数组.excalidraw",
     "draw/Spring.xmind",
     "draw",
@@ -150,7 +183,6 @@
     "docs/iOS/底层原理/src/timer/ProxyWithNSProxy.h",
     "docs/iOS/底层原理/src/timer/ProxyObj.m",
     "docs/iOS/底层原理/src/timer/ProxyObj.h",
-    "docs/iOS/底层原理/src/timer/GCDTimer.m",
     "docs/iOS/底层原理/assets/BLOCK/demo.png",
     "docs/iOS/底层原理/assets/BLOCK/block_forwarding.jpg",
     "docs/iOS/底层原理/assets/WWDC2020/memory_map.png",
@@ -179,14 +211,7 @@
     "docs/iOS/底层原理/07-关联对象.md",
     "Untitled 1.canvas",
     "Untitled.canvas",
-    "docs/daily/2023-11-16.md",
     "docs/Web/Vue/Vue Up And Run/Chapter 6 使用 vuex实现状态管理.md",
-    "docs/Web/Vue/Vue Up And Run/Chapter 7. Vuex 进阶.md",
-    "docs/Web/Vue/Vue Up And Run/Chapter 1. Vue 基础.md",
-    "docs/Java/Spring/init.md",
-    "docs/Java/Java基础/init.md",
-    "docs/iOS/init.md",
-    "docs/index.md",
-    "README.md"
+    "docs/Web/Vue/Vue Up And Run/Chapter 7. Vuex 进阶.md"
   ]
 }
