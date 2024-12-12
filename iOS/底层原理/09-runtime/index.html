@@ -1,0 +1,3092 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://murphlu.github.io/iOS/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/09-runtime/">
+      
+      
+        <link rel="prev" href="../08-block/">
+      
+      
+        <link rel="next" href="../10-runloop/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.48">
+    
+    
+      
+        <title>09 runtime - Murph's NoteBook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../javascripts/highlight.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#runtime" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Murph&#39;s NoteBook" class="md-header__button md-logo" aria-label="Murph's NoteBook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Murph's NoteBook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              09 runtime
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MurphLu/MurphLu.github.io.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Murph's NoteBook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Welcome to MkDocs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Java/Java%E5%9F%BA%E7%A1%80/init/" class="md-tabs__link">
+          
+  
+  Java
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Web/Vue/Vue%20Up%20And%20Run/Chapter%201.%20Vue%20%E5%9F%BA%E7%A1%80/" class="md-tabs__link">
+          
+  
+  Web
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../daily/2023-11-16/" class="md-tabs__link">
+          
+  
+  Daily
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-OC%20%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%9C%AC%E8%B4%A8/" class="md-tabs__link">
+          
+  
+  iOS
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../macOS%20Related/setup_new_device/" class="md-tabs__link">
+          
+  
+  macOS Related
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../%E6%9D%82/ffmpeg%E5%88%A0%E9%99%A4%E8%A7%86%E9%A2%91%E4%B8%AD%E7%9A%84%E9%9F%B3%E9%A2%91%E6%B5%81/" class="md-tabs__link">
+          
+  
+  杂
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Murph&#39;s NoteBook" class="md-nav__button md-logo" aria-label="Murph's NoteBook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Murph's NoteBook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MurphLu/MurphLu.github.io.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Murph's NoteBook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Welcome to MkDocs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Java
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Java基础
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            Java基础
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java/Java%E5%9F%BA%E7%A1%80/init/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Init
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Spring
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Spring
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java/Spring/init/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Init
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Web
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Web
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Vue
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Vue
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Vue Up And Run
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Vue Up And Run
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/Vue/Vue%20Up%20And%20Run/Chapter%201.%20Vue%20%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1. Vue 基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/Vue/Vue%20Up%20And%20Run/Chapter%202.%20Vue.js%20%E7%BB%84%E4%BB%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2. Vue.js 组件
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/Vue/Vue%20Up%20And%20Run/Chapter%203.%20%E4%BD%BF%E7%94%A8%20Vue%20%E6%B7%BB%E5%8A%A0%E6%A0%B7%E5%BC%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3. 使用 Vue 添加样式
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/Vue/Vue%20Up%20And%20Run/Chapter%204.%20render%20%E5%87%BD%E6%95%B0%E5%92%8C%20JSX/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4. render 函数和 JSX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/Vue/Vue%20Up%20And%20Run/Chapter%205.%20%E4%BD%BF%E7%94%A8%20Vue-router%20%E5%AE%9E%E7%8E%B0%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%B7%AF%E7%94%B1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5. 使用 Vue-router 实现客户端路由
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/Vue/Vue%20Up%20And%20Run/Chapter%206%20%E4%BD%BF%E7%94%A8%20vuex%E5%AE%9E%E7%8E%B0%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6 使用 vuex实现状态管理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Web/Vue/Vue%20Up%20And%20Run/Chapter%207.%20Vuex%20%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7. Vuex 进阶
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Daily
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Daily
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../daily/2023-11-16/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2023 11 16
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    iOS
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            iOS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    底层原理
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            底层原理
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-OC%20%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%9C%AC%E8%B4%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    01 OC 对象的本质
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E7%B1%BB%E5%AF%B9%E8%B1%A1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    02 类对象
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-isa%E3%80%81class%E3%80%81superClass/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    03 isa、class、superClass
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-KVO/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    04 KVO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-KVC/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    05 KVC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-Category/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    06 Category
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E5%85%B3%E8%81%94%E5%AF%B9%E8%B1%A1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    07 关联对象
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-block/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    08 block
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    09 runtime
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    09 runtime
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      runtime
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="runtime">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#isa" class="md-nav__link">
+    <span class="md-ellipsis">
+      isa 详解
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="isa 详解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      位域
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      共用体
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      位运算补充
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class" class="md-nav__link">
+    <span class="md-ellipsis">
+      Class 的结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法 method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Encoding
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法缓存
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#msgsend" class="md-nav__link">
+    <span class="md-ellipsis">
+      msgSend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#super" class="md-nav__link">
+    <span class="md-ellipsis">
+      super
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ismemberofclass-iskindofclass" class="md-nav__link">
+    <span class="md-ellipsis">
+      isMemberOfClass &amp;&amp;&amp; isKindOfClass
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      坑
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="坑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#llvm" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLVM 中间代码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runtime API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Runtime API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      类
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-runloop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10 runloop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11 多线程
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12 内存管理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13 优化
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%8A%A0%E8%BD%BD/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14 应用程序加载
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InterviewQuestions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InterviewQuestions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WWDC2020/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WWDC2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    macOS Related
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            macOS Related
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../macOS%20Related/setup_new_device/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup new device
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    杂
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            杂
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%9D%82/ffmpeg%E5%88%A0%E9%99%A4%E8%A7%86%E9%A2%91%E4%B8%AD%E7%9A%84%E9%9F%B3%E9%A2%91%E6%B5%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ffmpeg删除视频中的音频流
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%9D%82/postgreSQL%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    postgreSQL配置远程访问
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%9D%82/shell%E9%81%8D%E5%8E%86%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%96%87%E4%BB%B6%E5%B9%B6%E9%87%8D%E5%91%BD%E5%90%8D/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Shell遍历文件夹中文件并重命名
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E6%9D%82/%E4%BD%BF%E7%94%A8%20rmagick%20%E4%BB%8E%20pdf%20%E5%AF%BC%E5%87%BA%E5%9B%BE%E7%89%87%E6%A8%A1%E7%B3%8A%E7%9A%84%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    使用 rmagick 从 pdf 导出图片模糊的问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      runtime
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="runtime">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#isa" class="md-nav__link">
+    <span class="md-ellipsis">
+      isa 详解
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="isa 详解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      位域
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      共用体
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      位运算补充
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class" class="md-nav__link">
+    <span class="md-ellipsis">
+      Class 的结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法 method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Encoding
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法缓存
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#msgsend" class="md-nav__link">
+    <span class="md-ellipsis">
+      msgSend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#super" class="md-nav__link">
+    <span class="md-ellipsis">
+      super
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ismemberofclass-iskindofclass" class="md-nav__link">
+    <span class="md-ellipsis">
+      isMemberOfClass &amp;&amp;&amp; isKindOfClass
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      坑
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="坑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#llvm" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLVM 中间代码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runtime API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Runtime API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      类
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h2 id="runtime">runtime</h2>
+<p>Objective-C 是一门动态性比较强的语言，跟 C，C++ 有很大不同</p>
+<p>常规语言的过程 编写代码 -&gt; 编译链接 -&gt; 运行</p>
+<p>OC 引入了 runtime 机制，运行时</p>
+<p>Objective-C 的动态性是由 Runtime API 来支持的</p>
+<p>Runtime API 提供的接口基本都是 C 语言的，源码由 C\C++\汇编语言编写</p>
+<h3 id="isa">isa 详解</h3>
+<ul>
+<li>要学习 Runtime，首先要了解它底层的一些常用的数据结构，比如 isa 指针</li>
+<li>在 arm64 架构之前，isa 就是一个普通的指针，存储这 Class、Meta-Class 对象的内存地址</li>
+<li>从 arm64 架构开始，对 isa 进行了优化，变成了一个共用体（union）结构，还使用位域来存储更多的信息</li>
+</ul>
+<p>runtime 中 object 的结构</p>
+<pre><code class="language-C++">struct objc_object {
+private:
+    isa_t isa;
+}
+
+union isa_t {
+    isa_t() { }
+    isa_t(uintptr_t value) : bits(value) { }
+    uintptr_t bits;
+private:
+    // Accessing the class requires custom ptrauth operations, so
+    // force clients to go through setClass/getClass by making this
+    // private.
+    Class cls;
+
+public:
+#if defined(ISA_BITFIELD)
+    struct {
+        ISA_BITFIELD;  // defined in isa.h
+    };
+
+    bool isDeallocating() {
+        return extra_rc == 0 &amp;&amp; has_sidetable_rc == 0;
+    }
+    void setDeallocating() {
+        extra_rc = 0;
+        has_sidetable_rc = 0;
+    }
+#endif
+
+    void setClass(Class cls, objc_object *obj);
+    Class getClass(bool authenticated);
+    Class getDecodedClass(bool authenticated);
+};
+
+# if __arm64__
+// ARM64 simulators have a larger address space, so use the ARM64e
+// scheme even when simulators build for ARM64-not-e.
+#   if __has_feature(ptrauth_calls) || TARGET_OS_SIMULATOR
+#     define ISA_MASK        0x007ffffffffffff8ULL
+#     define ISA_MAGIC_MASK  0x0000000000000001ULL
+#     define ISA_MAGIC_VALUE 0x0000000000000001ULL
+#     define ISA_HAS_CXX_DTOR_BIT 0
+#     define ISA_BITFIELD                                                      \
+        uintptr_t nonpointer        : 1;                                       \
+        uintptr_t has_assoc         : 1;                                       \
+        uintptr_t weakly_referenced : 1;                                       \
+        uintptr_t shiftcls_and_sig  : 52;                                      \
+        uintptr_t has_sidetable_rc  : 1;                                       \
+        uintptr_t extra_rc          : 8
+#     define RC_ONE   (1ULL&lt;&lt;56)
+#     define RC_HALF  (1ULL&lt;&lt;7)
+#   else
+#     define ISA_MASK        0x0000000ffffffff8ULL
+#     define ISA_MAGIC_MASK  0x000003f000000001ULL
+#     define ISA_MAGIC_VALUE 0x000001a000000001ULL
+#     define ISA_HAS_CXX_DTOR_BIT 1
+#     define ISA_BITFIELD                                                      \
+        uintptr_t nonpointer        : 1;                                       \
+        uintptr_t has_assoc         : 1;                                       \
+        uintptr_t has_cxx_dtor      : 1;                                       \
+        uintptr_t shiftcls          : 33; /*MACH_VM_MAX_ADDRESS 0x1000000000*/ \
+        uintptr_t magic             : 6;                                       \
+        uintptr_t weakly_referenced : 1;                                       \
+        uintptr_t unused            : 1;                                       \
+        uintptr_t has_sidetable_rc  : 1;                                       \
+        uintptr_t extra_rc          : 19
+#     define RC_ONE   (1ULL&lt;&lt;45)
+#     define RC_HALF  (1ULL&lt;&lt;18)
+#   endif
+
+# elif __x86_64__
+#   define ISA_MASK        0x00007ffffffffff8ULL
+#   define ISA_MAGIC_MASK  0x001f800000000001ULL
+#   define ISA_MAGIC_VALUE 0x001d800000000001ULL
+#   define ISA_HAS_CXX_DTOR_BIT 1
+#   define ISA_BITFIELD                                                        \
+      uintptr_t nonpointer        : 1;                                         \
+      uintptr_t has_assoc         : 1;                                         \
+      uintptr_t has_cxx_dtor      : 1;                                         \
+      uintptr_t shiftcls          : 44; /*MACH_VM_MAX_ADDRESS 0x7fffffe00000*/ \
+      uintptr_t magic             : 6;                                         \
+      uintptr_t weakly_referenced : 1;                                         \
+      uintptr_t unused            : 1;                                         \
+      uintptr_t has_sidetable_rc  : 1;                                         \
+      uintptr_t extra_rc          : 8
+#   define RC_ONE   (1ULL&lt;&lt;56)
+#   define RC_HALF  (1ULL&lt;&lt;7)
+
+# else
+#   error unknown architecture for packed isa
+# endif
+
+// SUPPORT_PACKED_ISA
+#endif
+
+</code></pre>
+<p>位运算 &amp;与，|或，~按位取反</p>
+<h4 id="_1">位域</h4>
+<pre><code class="language-Objective-C">@interface Person()
+{
+    // 位域，可以标明成员变量占用位数，
+    // 默认情况下，那么每个成员变量占用一字节，但是char 实际使用的只有一位，一字节 = 8bit
+    // 使用位域的话，可以直接在内存中按顺序排开，不需要每个char 都占用一个字节，可以多个 char 占用同一字节
+    struct {
+        char tall : 1 // 最右一位
+        char rich : 1 // 倒数第二位
+        char handsome : 1 // 倒数第三位
+    } __tallRichHandsome;
+}
+@end
+
+@implement:Person
+-(void) setTall:(BOOL)tall {
+    __tallRichHandsome.tall = tall;
+}
+
+-(BOOL) getTall {
+    return !!__tallRichHandsome.tall;
+}
+@end
+
+</code></pre>
+<h3 id="_2">共用体</h3>
+<pre><code class="language-Objective-C">#define TallMask (1&lt;&lt;0)
+#define RichMask (1&lt;&lt;1)
+#define HandSomeMask (1&lt;&lt;2)
+
+@interface Person()
+{
+    // 使用共用体就可以使用位运算读写
+    union{
+        // 这个是根据实际需要的字节来定义的，mask 也需要根据实际占用的空间来做相应调整
+        char bits;
+        // 只是增加可读性，在程序中只访问 bits
+        struct {
+            char tall : 1 // 最右一位
+            char rich : 1 // 倒数第二位
+            char handsome : 1 // 倒数第三位
+        }
+    } __tallRichHandsome;
+}
+@end
+
+@implement:Person
+-(void) setTall:(BOOL)tall {
+    if(tall) {
+        __tallRichHandsome.bits |= TallMask;
+    } else {
+        __tallRichHandsome.bits &amp;= ~TallMask;
+    }
+}
+
+-(BOOL) getTall {
+    return !!(__tallRichHandsome.bits &amp; TallMask);
+}
+@end
+</code></pre>
+<p>通过以上分析，在 ARM64 机器上，最终的 isa  长这样</p>
+<pre><code class="language-C++">union isa_t {
+    isa_t() { }
+    isa_t(uintptr_t value) : bits(value) { }
+    uintptr_t bits;
+private:
+    // Accessing the class requires custom ptrauth operations, so
+    // force clients to go through setClass/getClass by making this
+    // private.
+    Class cls;
+    #   define ISA_MASK        0x00007ffffffffff8ULL
+
+    struct {
+        // 0代表普通指针，存储着 Class、Meta-Class 对象的内存地址
+        // 1 代表优化过，使用位域存储更多信息
+        uintptr_t nonpointer        : 1;                                       \
+
+        // 是否设置过关联对象，如果没有，释放时会更快
+        uintptr_t has_assoc         : 1;                                       \
+
+        //是否有 C++ 的析构函数（.cxx_destruct），如果没有，释放时会更快
+        uintptr_t has_cxx_dtor      : 1;                                       \
+
+        // 存储着 Class, Meta-Class 对象的内存地址信息
+        uintptr_t shiftcls          : 33; /*MACH_VM_MAX_ADDRESS 0x1000000000*/ \
+
+        // 用于在调试时分辨对象是否未完成初始化
+        uintptr_t magic             : 6;                                       \
+
+        // 是否有被弱引用指向过，如果没有，释放时会更快
+        uintptr_t weakly_referenced : 1;                                       \
+
+        // 原来存储的是 deallocating 现在直接使用 has_sidetable_rc 和 extra_rc 来判断
+        uintptr_t unused            : 1;                                       \
+
+        // 引用计数器是否过大无法存储在 isa 中
+        // 如果为1，那么引用计数会存储在一个叫做 SideTable 的类的属性中
+        uintptr_t has_sidetable_rc  : 1;                                       \
+
+        // 里面存储的值是引用计数器减1
+        uintptr_t extra_rc          : 19 
+    };
+</code></pre>
+<p>所以在取 isa 地址的时候需要使用 isa_t.bits &amp; ISA_MASK
+由于位域最后三位被其他占用，所以通过 ISA_MASK 取出的 Class, Meta-Class 的地址后三位为0</p>
+<h3 id="_3">位运算补充</h3>
+<p>OC 中许多属性或者参数也都是通过位运算来实现的
+比如在传参或者设置属性的时候用 option1 | option2 | option3</p>
+<pre><code class="language-Objective-C">typedef enum {
+    Option1 = 1, // 0b0001 1&lt;&lt;0
+    Option2 = 2, // 0b0010 1&lt;&lt;1
+    Opiont3 = 4, // 0b0100 1&lt;&lt;2
+    Opiont4 = 8, // 0b1000 1&lt;&lt;3
+} Options;
+
+[self setOptions: Options.Option1 | Options.Option2 | Options.Option3]
+
+-(void)setOptions:(Options)options {
+    if (otions &amp; Option1){
+        NSLog(@&quot;包含 option1 &quot;)
+    } 
+    if(otions &amp; Option2) {
+        NSLog(@&quot;包含 option2 &quot;)
+    }
+    ......
+}
+</code></pre>
+<h3 id="class">Class 的结构</h3>
+<pre><code class="language-C++">// isa_t 结构
+union isa_t {
+    isa_t() { }
+    isa_t(uintptr_t value) : bits(value) { }
+
+    uintptr_t bits;
+
+private:
+    // 通过 setClass/getClass 读写值
+    Class cls;
+
+public:
+#if defined(ISA_BITFIELD)
+    struct {
+        ISA_BITFIELD;  // defined in isa.h
+    };
+#endif
+};
+
+// objc_object 结构
+struct objc_object {
+private:
+    isa_t isa;
+}
+
+// objc_class 结构
+struct objc_class : objc_object {
+    Class superclass;
+    cache_t cache;             // formerly cache pointer and vtable
+    class_data_bits_t bits;    
+}
+
+// class_data_bits_t 的定义
+// 里面通过 bits &amp; FAST_DATA_MASK 拿到 class_rw_t 的地址
+struct class_data_bits_t {
+    friend objc_class;
+
+    // Values are the FAST_ flags above.
+    uintptr_t bits;
+private:
+    bool getBit(uintptr_t bit) const
+    {
+        return bits &amp; bit;
+    }
+
+public:
+
+    class_rw_t* data() const {
+        return (class_rw_t *)(bits &amp; FAST_DATA_MASK);
+    }
+
+    const class_ro_t *safe_ro() const {
+        class_rw_t *maybe_rw = data();
+        if (maybe_rw-&gt;flags &amp; RW_REALIZED) {
+            // maybe_rw is rw
+            return maybe_rw-&gt;ro();
+        } else {
+            // maybe_rw is actually ro
+            return (class_ro_t *)maybe_rw;
+        }
+    }
+};
+
+// class_rw_t
+// 现在的class_rw_t 跟之前的已经有很大的不同，iOS14 之前原来的 class_rw_t，存储了所有可以修改的信息
+// iOS14 之后，已经优化了，把一定会被修改的放到了 class_rw_t 内
+// 不是一定会被修改的内容 抽到了 class_rw_ext_t 只有用到的时候才会初始化
+// 通过 explicit_atomic&lt;uintptr_t&gt; ro_or_rw_ext; 动态的的存储 class_ro_t 或者 class_rw_ext_t 的地址
+// 如果有 class_rw_ext_t，那么会通过 class_rw_ext_t 中的 ro 来指向 class_ro_t
+// 如果没有 class_rw_ext_t，class_rw_t 中的 explicit_atomic&lt;uintptr_t&gt; ro_or_rw_ext 会直接指向 class_ro_t
+
+struct class_rw_t {
+    // Be warned that Symbolication knows the layout of this structure.
+    uint32_t flags;
+    uint16_t witness;
+#if SUPPORT_INDEXED_ISA
+    uint16_t index;
+#endif
+
+    explicit_atomic&lt;uintptr_t&gt; ro_or_rw_ext;
+
+    Class firstSubclass;
+    Class nextSiblingClass;
+private:   
+    //  实现联合保存两种不同的可区分类型的指针,将区分位保存在指针的最低位
+    // 比如 两种的话是 PointerUnion 最后一位来保存类型， 四种的话是 PointerUnion4 后两位来保存类型
+    using ro_or_rw_ext_t = objc::PointerUnion&lt;const class_ro_t, class_rw_ext_t, PTRAUTH_STR(&quot;class_ro_t&quot;), PTRAUTH_STR(&quot;class_rw_ext_t&quot;)&gt;;
+public:
+    class_rw_ext_t *extAllocIfNeeded() {
+        auto v = get_ro_or_rwe();
+        if (fastpath(v.is&lt;class_rw_ext_t *&gt;())) {
+            return v.get&lt;class_rw_ext_t *&gt;(&amp;ro_or_rw_ext);
+        } else {
+            return extAlloc(v.get&lt;const class_ro_t *&gt;(&amp;ro_or_rw_ext));
+        }
+    }
+
+    void set_ro_or_rwe(class_rw_ext_t *rwe, const class_ro_t *ro) {
+        // the release barrier is so that the class_rw_ext_t::ro initialization
+        // is visible to lockless readers
+        rwe-&gt;ro = ro;
+        ro_or_rw_ext_t{rwe, &amp;ro_or_rw_ext}.storeAt(ro_or_rw_ext, memory_order_release);
+    }
+}
+
+// class_rw_ext_t 按需初始化，只有对其中包含的成员进行修改时才会初始化
+// cls-&gt;data()-&gt;extAllocIfNeeded() 实际上就是通过 class_rw_t 中的方法来对其进行初始化，如果有则初始化完之后返回，如果没有，则初始化并返回
+struct class_rw_ext_t {
+    DECLARE_AUTHED_PTR_TEMPLATE(class_ro_t)
+    class_ro_t_authed_ptr&lt;const class_ro_t&gt; ro;
+    method_array_t methods;
+    property_array_t properties;
+    protocol_array_t protocols;
+    char *demangledName;
+    uint32_t version;
+};
+
+// class_rw_ext_t 的初始化方法
+// 可以看到 class_rw_ext_t 在初始化的时候将 class_ro_t 中的现有的值全部添加到了 class_rw_ext_t 中
+
+class_rw_ext_t *
+class_rw_t::extAlloc(const class_ro_t *ro, bool deepCopy)
+{
+    runtimeLock.assertLocked();
+
+    auto rwe = objc::zalloc&lt;class_rw_ext_t&gt;();
+
+    rwe-&gt;version = (ro-&gt;flags &amp; RO_META) ? 7 : 0;
+
+    method_list_t *list = ro-&gt;baseMethods();
+    if (list) {
+        if (deepCopy) list = list-&gt;duplicate();
+        rwe-&gt;methods.attachLists(&amp;list, 1);
+    }
+
+    // See comments in objc_duplicateClass
+    // property lists and protocol lists historically
+    // have not been deep-copied
+    //
+    // This is probably wrong and ought to be fixed some day
+    property_list_t *proplist = ro-&gt;baseProperties;
+    if (proplist) {
+        rwe-&gt;properties.attachLists(&amp;proplist, 1);
+    }
+
+    protocol_list_t *protolist = ro-&gt;baseProtocols;
+    if (protolist) {
+        rwe-&gt;protocols.attachLists(&amp;protolist, 1);
+    }
+    // 通过 set_ro_or_rwe 将 rwe 地址赋值给 ro_or_rw_ext，class_rw_ext_t 的 ro 指向 class_rw_t
+    set_ro_or_rwe(rwe, ro);
+    return rwe;
+}
+
+// class_ro_t 打死都不会动的，不会有任何变化
+struct class_ro_t {
+    uint32_t flags;
+    uint32_t instanceStart;
+    uint32_t instanceSize;
+#ifdef __LP64__
+    uint32_t reserved;
+#endif
+
+    union {
+        const uint8_t * ivarLayout;
+        Class nonMetaclass;
+    };
+
+    explicit_atomic&lt;const char *&gt; name;
+    // With ptrauth, this is signed if it points to a small list, but
+    // may be unsigned if it points to a big list.
+    void *baseMethodList;
+    protocol_list_t * baseProtocols;
+    const ivar_list_t * ivars;
+
+    const uint8_t * weakIvarLayout;
+    property_list_t *baseProperties;
+}
+</code></pre>
+<p>通过上面的分析可以得到</p>
+<p>objc_object 通过共用体，位域，存储了 isa 指针，通过<code>isa_t.bits &amp; ISA_MASK</code> 得到 类对象地址，当然也可以通过其他 mask 获得类对象的其他信息</p>
+<p>objc_class 继承自 objc_object，其中存储着 <code>Class superclass</code>，<code>cache_t cache</code>， <code>class_data_bits_t bits</code>，当然也包括从 objc_object 继承来的 <code>isa_t isa</code>，</p>
+<p>其中 <code>class_data_bits_t</code> (也是通过位域来存储信息) 中可以通过 <code>bits &amp; FAST_DATA_MASK</code> 拿到 <code>class_rw_t</code> 的地址，当然从外部是直接通过 <code>class_data_bits_t-&gt;data()</code> 来直接获取到 <code>class_rw_t</code> 的地址，外部并不关心你是怎么存储的，只要拿到自己需要的信息就OK</p>
+<p>然后就是 <code>class_rw_t</code>，iOS14 之前，<code>class_rw_t</code> 几乎存储了所有能在运行时被改变的内容，尽管大部分类并不会对其作出改变，
+现在 <code>class_rw_t</code> 仅存储了一些一定会改变的内容，而不一定需要修改的内容则放到了 <code>class_rw_ext_t</code> 中按需做初始化
+<code>class_rw_t</code>中存储了 <code>uint32_t flags;</code>, <code>uint16_t witness;</code>, <code>uint16_t index;</code>, <code>explicit_atomic&lt;uintptr_t&gt; ro_or_rw_ext;</code>, <code>Class firstSubclass;</code>, <code>Class nextSiblingClass;</code></p>
+<p><code>explicit_atomic&lt;uintptr_t&gt; ro_or_rw_ext;</code> 通过 UnionPointer 来实现存储两种不同的可区分类型的指针,将区分位保存在指针的最低位，它所存储的类型为 如果没有 <code>class_rw_ext_t</code> 则为 <code>class_ro_t</code>, 否则为 <code>class_rw_ext_t</code></p>
+<p>同时 <code>class_rw_t</code> 也提供了方法来初始化 <code>class_rw_ext_t</code> 等的一些方法</p>
+<p><code>class_rw_ext_t</code>中存储了<code>class_ro_t_authed_ptr&lt;const class_ro_t&gt; ro;</code>, <code>method_array_t methods;</code>, <code>property_array_t properties;</code>, <code>protocol_array_t protocols;</code>, <code>char *demangledName;</code>, <code>uint32_t version;</code> 这些信息。</p>
+<p>如果有 <code>class_rw_ext_t</code>，那么则由其中的 <code>ro</code> 来指向 <code>class_ro_t</code></p>
+<p><code>class_rw_ext_t</code> 在初始化的时候会将 <code>class_ro_t</code> 中的相关信息存过来一份，在 <code>imageLoad</code> 过程中，如果有分类就直接在 <code>mapImages</code> 的时候就初始化了 <code>class_rw_ext_t</code>，并将分类中的信息储存进来</p>
+<p><code>class_ro_t</code> 中就存储了 class 的初始信息，只读，直接去上面代码中看吧</p>
+<h3 id="method">方法 method</h3>
+<pre><code class="language-C++">typedef id _Nullable (*IMP)(id _Nonnull, SEL _Nonnull, ...); 
+
+struct method_t {
+    SEL name; // 函数名
+    const char *types; // 编码 （返回值类型，参数类型）
+    IMP imp; // 指向函数的指针（函数地址）
+}
+</code></pre>
+<ul>
+<li>
+<p>IMP 代表函数的具体实现</p>
+</li>
+<li>
+<ul>
+<li><code>typedef id _Nullable (*IMP)(id _Nonnull, SEL _Nonnull, ...);</code></li>
+</ul>
+</li>
+<li>
+<p>SEL 代表方法\函数名，一般叫做选择器，底层结构跟 <code>char *</code> 类似</p>
+</li>
+<li>
+<ul>
+<li>通过 @selector 或者 sel_registerName 获得</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>可以通过 sel_getName 和 NSStringFromSelector 转成字符串</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>不同类中的相同名字的方法，所对应的方法选择器是相同的</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>types 包含了返函数返回值、参数编码的字符串 </li>
+</ul>
+</li>
+</ul>
+<h3 id="type-encoding">Type Encoding</h3>
+<p>iOS 中提供了一个叫做 @encode 的指令，可以将具体类型 表示成字符串编码</p>
+<p><a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1">官方文档地址</a></p>
+<pre><code class="language-Objective-C">// types = i24@0:8i16f20
+// i    返回值int
+// 24   参数总大小
+// @0   id从0开始，占8字节
+// :8   SEL从id结尾开始，占8字节
+// i16  age 从16开始，占4字节
+// f20  height 从20开始，占4字节
+// 方法默认两个参数 id cmd
+-(int) test:(int) age height:(float)height;
+</code></pre>
+<h3 id="_4">方法缓存</h3>
+<p>Class 内部结构中有个方法缓存 （cache_t），用散列表来缓存曾经调用过的方法，可以提高方法查找速度</p>
+<p><img alt="Image" src="../assets/runtime/method_cache_process.jpg" /></p>
+<h3 id="msgsend">msgSend</h3>
+<p>OC 方法调用最终会转化为 objc_msgSend 的消息机制，给方法调用者发送消息</p>
+<ul>
+<li>
+<p>objc_msgSend 的执行流程分为三大阶段</p>
+</li>
+<li>
+<p>消息发送</p>
+</li>
+<li>动态方法解析</li>
+<li>消息转发</li>
+<li>throw error (unreconized selector send to instance)</li>
+</ul>
+<pre><code class="language-s">ENTRY _objc_msgSend
+    UNWIND _objc_msgSend, NoFrame
+
+    // p0 寄存器：receiver
+    cmp p0, #0          // 比较指令，比较 receiver 地址与 #0 的大小
+#if SUPPORT_TAGGED_POINTERS
+    b.le    LNilOrTagged        // receiver 地址 小于等于 0，由于 taggedPointer 的最高位为 1，所以等于 1 为 taggedPointer，等于0为 nil，调用 LNilOrTagged
+#else
+    b.eq    LReturnZero         // 不支持 taggedPointer，那就直接判空就可以了，因为不需要去从 taggedPointer 拿值再往下走的情况，直接调用 LReturnZero
+#endif
+    ldr p13, [x0]       // p13 = isa // 将 [x0] 中的信息读取到 p13
+    GetClassFromIsa_p16 p13, 1, x0  // p16 = class
+LGetIsaDone:
+    // calls imp or objc_msgSend_uncached
+    CacheLookup NORMAL, _objc_msgSend, __objc_msgSend_uncached // 查找缓存
+
+#if SUPPORT_TAGGED_POINTERS
+LNilOrTagged:
+    b.eq    LReturnZero     // nil check
+    GetTaggedClass
+    b   LGetIsaDone
+// SUPPORT_TAGGED_POINTERS
+#endif
+
+LReturnZero:
+    // x0 is already zero
+    mov x1, #0
+    movi    d0, #0
+    movi    d1, #0
+    movi    d2, #0
+    movi    d3, #0
+    ret                 // return
+
+    END_ENTRY _objc_msgSend
+</code></pre>
+<p>CacheLookup 中就实现了从缓存中查找已经缓存方法，假如找不到就会调用到 <code>__objc_msgSend_uncached</code>
+<code>__objc_msgSend_uncached</code> 又去调用了 <code>MethodTableLookup</code>
+<code>MethodTableLookup</code> 继续调用 <code>_lookUpImpOrForward</code></p>
+<p>然后我们回到 C++ 中查看 <code>lookUpImpOrForward</code> 方法</p>
+<pre><code class="language-C++">IMP lookUpImpOrForward(id inst, SEL sel, Class cls, int behavior)
+{
+    const IMP forward_imp = (IMP)_objc_msgForward_impcache;
+    IMP imp = nil;
+    Class curClass;
+
+    runtimeLock.assertUnlocked();
+
+    if (slowpath(!cls-&gt;isInitialized())) {
+        // The first message sent to a class is often +new or +alloc, or +self
+        // which goes through objc_opt_* or various optimized entry points.
+        //
+        // However, the class isn't realized/initialized yet at this point,
+        // and the optimized entry points fall down through objc_msgSend,
+        // which ends up here.
+        //
+        // We really want to avoid caching these, as it can cause IMP caches
+        // to be made with a single entry forever.
+        //
+        // Note that this check is racy as several threads might try to
+        // message a given class for the first time at the same time,
+        // in which case we might cache anyway.
+        behavior |= LOOKUP_NOCACHE;
+    }
+
+    // runtimeLock is held during isRealized and isInitialized checking
+    // to prevent races against concurrent realization.
+
+    // runtimeLock is held during method search to make
+    // method-lookup + cache-fill atomic with respect to method addition.
+    // Otherwise, a category could be added but ignored indefinitely because
+    // the cache was re-filled with the old value after the cache flush on
+    // behalf of the category.
+
+    runtimeLock.lock();
+
+    // We don't want people to be able to craft a binary blob that looks like
+    // a class but really isn't one and do a CFI attack.
+    //
+    // To make these harder we want to make sure this is a class that was
+    // either built into the binary or legitimately registered through
+    // objc_duplicateClass, objc_initializeClassPair or objc_allocateClassPair.
+    checkIsKnownClass(cls);
+
+    cls = realizeAndInitializeIfNeeded_locked(inst, cls, behavior &amp; LOOKUP_INITIALIZE);
+    // runtimeLock may have been dropped but is now locked again
+    runtimeLock.assertLocked();
+    curClass = cls;
+
+    // The code used to lookup the class's cache again right after
+    // we take the lock but for the vast majority of the cases
+    // evidence shows this is a miss most of the time, hence a time loss.
+    //
+    // The only codepath calling into this without having performed some
+    // kind of cache lookup is class_getInstanceMethod().
+
+    for (unsigned attempts = unreasonableClassCount();;) {
+        if (curClass-&gt;cache.isConstantOptimizedCache(/* strict */true)) {
+#if CONFIG_USE_PREOPT_CACHES
+
+
+            imp = cache_getImp(curClass, sel);
+            if (imp) goto done_unlock;
+
+            curClass = curClass-&gt;cache.preoptFallbackClass();
+#endif
+        } else {
+            // 查找传入对象的类对象中是否有该方法，如果有，拿到 imp 直接跳转到 done
+            // curClass method list.
+            Method meth = getMethodNoSuper_nolock(curClass, sel);
+            if (meth) {
+                imp = meth-&gt;imp(false);
+                goto done;
+            }
+
+            // 如果从自己方法列表中找不到的话，就拿到 superClass，
+            // 如果 superClass 是空，那么就返回 forward_imp
+            if (slowpath((curClass = curClass-&gt;getSuperclass()) == nil)) {
+                // No implementation found, and method resolver didn't help.
+                // Use forwarding.
+                imp = forward_imp;
+                break;
+            }
+        }
+
+        // Halt if there is a cycle in the superclass chain.
+        if (slowpath(--attempts == 0)) {
+            _objc_fatal(&quot;Memory corruption in class list.&quot;);
+        }
+        // 看一下 superClass 的cache 中有没有实现，有就跳出循环继续往下走
+        // Superclass cache.
+        imp = cache_getImp(curClass, sel);
+        // 假如父类中返回的就是 forward_imp，那直接跳出循环继续往下走
+        if (slowpath(imp == forward_imp)) {
+            // Found a forward:: entry in a superclass.
+            // Stop searching, but don't cache yet; call method
+            // resolver for this class first.
+            break;
+        }
+        // 如果找到实现的话，那就跳转到 done
+        if (fastpath(imp)) {
+            // Found the method in a superclass. Cache it in this class.
+            goto done;
+        }
+    }
+
+    // No implementation found. Try method resolver once.
+
+    if (slowpath(behavior &amp; LOOKUP_RESOLVER)) {
+        behavior ^= LOOKUP_RESOLVER;
+        return resolveMethod_locked(inst, sel, cls, behavior);
+    }
+
+ done:
+    if (fastpath((behavior &amp; LOOKUP_NOCACHE) == 0)) {
+#if CONFIG_USE_PREOPT_CACHES
+        while (cls-&gt;cache.isConstantOptimizedCache(/* strict */true)) {
+            cls = cls-&gt;cache.preoptFallbackClass();
+        }
+#endif
+        // 将找到的 imp 添加到缓存
+        log_and_fill_cache(cls, imp, sel, inst, curClass);
+    }
+ done_unlock:
+    runtimeLock.unlock();
+    if (slowpath((behavior &amp; LOOKUP_NIL) &amp;&amp; imp == forward_imp)) {
+        return nil;
+    }
+    // 返回
+    return imp;
+}
+</code></pre>
+<ul>
+<li>消息发送 </li>
+<li>
+<ol>
+<li>消息接受者为 nil，也就是方法调用者，是直接返回，否继续</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>查找是否有cache, 有，直接调用并返回，没有继续往下走</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>查找类或者父类是否有实现，有直接调用存入缓存，并返回</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>都没有，那就进入动态方法解析
+<img alt="Image" src="../assets/runtime/msg_send.png" /></li>
+</ol>
+</li>
+<li>消息动态解析</li>
+<li>
+<ol>
+<li>调用 <code>resolveInstanceMethod</code> 或者 <code>resolveClassMethod</code>, 向receiver 中添加方法并返回 <code>BOOL</code> 值（返回不做其他用途，只用来打印）</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>继续上面的查找步骤，找到第一步中动态添加的实现，调用，缓存，并返回，找不到则到消息转发阶段
+<img alt="Image" src="../assets/runtime/msg_resolve.png" /></li>
+</ol>
+</li>
+<li>消息转发</li>
+<li>
+<ol>
+<li>调用 <code>forwardingTargetForSelector</code>，并返回将消息转发给哪个对象，如果返回值不为 <code>nil</code>，直接将消息发送给返回的对象去做处理，如果返回为 <code>nil</code> 继续往下走</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>调用 <code>methodSignatureForSelector</code>方法，并返回方法签名，也就是 types， <code>v16@0:8</code>这个玩意儿，如果返回不为 <code>nil</code> 则跳转到第 3 步， 否则跳转到第 4 步</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>调用 <code>forwardInvocation</code>方法，只要进入该方法，无论做什么事情都没有关系</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>调用 <code>doesNotRecognizeSelector</code>方法，如果实现了这个方法那么就调用这个方法，如果没有实现，那么直接调用默认的实现，抛出 unrecognized selector 的错误
+<img alt="Image" src="../assets/runtime/msg_forward.png" /></li>
+</ol>
+</li>
+</ul>
+<p>instance method</p>
+<pre><code>+ (BOOL) resolveInstanceMethod:(SEL)sel
+- (id)forwardingTargetForSelector:(SEL)aSelector // 返回实例对象，当然如果实现了相应的类方法，那么返回类对象也是可以的
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
+- (void)forwardInvocation:(NSInvocation *)anInvocation
+</code></pre>
+<p>class method</p>
+<pre><code>+ (BOOL) resolveClassMethod:(SEL)sel
++ (id)forwardingTargetForSelector:(SEL)aSelector // 返回类对象，当然如果实现了相应的实例方法，那么返回实例对象也是可以的
++ (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
++ (void)forwardInvocation:(NSInvocation *)anInvocation
+</code></pre>
+<p>@dynamic 是告诉编译器不用自动生成 getter 和 setter 的实现，而是到运行时在添加实现</p>
+<p>@synthesize age=_age 告诉编译器自动生成 成员变量及 getter 和 setter 的实现，编译器已经自动处理，不需要写出来</p>
+<h3 id="super">super</h3>
+<p>一个问题引发的思考</p>
+<pre><code class="language-Onjective-C">@interface Person : NSObject
+-(void) run;
+@end
+
+@implementation Person
+-(void) run{
+    NSLog(@&quot;Person run&quot;);
+}
+@end
+
+@interface Student : Person
+-(void)eat;
+@end
+@implementation Student
+- (instancetype)init{
+    if(self=[super init]){
+        NSLog(@&quot;[self class] %@&quot;, [self class]); // [self class] Student
+        NSLog(@&quot;[self superClass] %@&quot;, [self superclass]); // [self superClass] Person
+
+        NSLog(@&quot;[super class] %@&quot;, [super class]); // [super class] Student
+        NSLog(@&quot;[super superClass] %@&quot;, [super superclass]); // [super superClass] Person
+    }
+    return self;
+}
+-(void)eat{
+    [super run];
+    NSLog(@&quot;student eat&quot;);
+}
+@end
+</code></pre>
+<p>我们看到，在 <code>Student</code> 中，无论是使用 [self class]，还是 [super class]，结果都是一样的</p>
+<pre><code class="language-C++">struct __rw_objc_super { 
+    struct objc_object *object;  // 消息接收者
+    struct objc_object *superClass;  // 消息接收者的父类
+    __rw_objc_super(struct objc_object *o, struct objc_object *s) : object(o), superClass(s) {} 
+};
+
+// Student 转成 C++ 简化后的代码
+objc_msgSend(self, sel_registerName(&quot;class&quot;));
+objc_msgSend(self, sel_registerName(&quot;superclass&quot;)));
+
+objc_msgSendSuper(
+    __rw_objc_super{self, class_getSuperclass(objc_getClass(&quot;Student&quot;))},
+    sel_registerName(&quot;class&quot;)
+);
+
+objc_msgSendSuper(
+    __rw_objc_super{self, class_getSuperclass(objc_getClass(&quot;Student&quot;))},
+     sel_registerName(&quot;superclass&quot;))
+);
+</code></pre>
+<p>我们可以看到，在 objc_msgSendSuper 中会传入一个 __rw_objc_super 的结构体，包含消息接收者以及父类对象，</p>
+<p>消息接收者仍然是该对象本身，父类对象只是告诉 runtime 从哪里开始查找方法的实现而已</p>
+<p>而 class 方法最终调用的都是 NSObject 的 class 方法，其实现大概就是，最终返回的还是消息接收者到底是什么类型</p>
+<pre><code class="language-Objective-c">// NSObject 中 class 及 superClass 的实现
+
+-(Class) class {
+    return object_getClass(self);
+}
+
+-(Class) superclass {
+    return object_getSuperclass(object_getClass(self));
+}
+</code></pre>
+<p>[super message] 的底层实现
+1. 消息接收者仍然是子类对象
+2. 只是实现要从父类开始查找</p>
+<h3 id="ismemberofclass-iskindofclass">isMemberOfClass &amp;&amp;&amp; isKindOfClass</h3>
+<pre><code class="language-Objective-C">+ (BOOL)isMemberOfClass:(Class)cls {
+    return self-&gt;ISA() == cls;
+}
+
+- (BOOL)isMemberOfClass:(Class)cls {
+    return [self class] == cls;
+}
+
++ (BOOL)isKindOfClass:(Class)cls {
+    for (Class tcls = self-&gt;ISA(); tcls; tcls = tcls-&gt;getSuperclass()) {
+        if (tcls == cls) return YES;
+    }
+    return NO;
+}
+
+- (BOOL)isKindOfClass:(Class)cls {
+    for (Class tcls = [self class]; tcls; tcls = tcls-&gt;getSuperclass()) {
+        if (tcls == cls) return YES;
+    }
+    return NO;
+}
+</code></pre>
+<p>isMemberOfClass 实际上是比较对象的 isa 指针所向的内容是否为要判断的类型
+isKindOfClass 实际上是比较对象的 isa 指针所向的内容或者所指向内容的 superclass 是否为要判断的类型</p>
+<p>实例对象与类对象做判断，类对象与元类对象做判断</p>
+<p>但是一种特殊情况需要注意</p>
+<h1 id="_5">坑</h1>
+<p><code>[Person isKindOfClass:[NSObject class]]</code> 这个是返回 true 的，因为 Person 的元类对象在一层一层向上找 superclass 的时候，找到 NSObject 的元类对象，NSObject 元类对象的 superclass 是指向 NSObject 的类对象的，所以最终会返回 true</p>
+<pre><code class="language-Objective-C">@interface Person : NSObject
+@property(copy, nonatomic) NSString *name;
+@end
+
+@implementation Person
+-(void) test {
+    NSLog(@&quot;name is %@&quot;, _name);
+}
+@end
+
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        NSString *s = @&quot;aaa&quot;;
+        // NSObject *obj2 = [[NSObject alloc] init];
+        id cls = [Person class];
+        void *obj = &amp;cls;
+        [(__bridge id)obj test];
+
+    }
+    return 0;
+}
+</code></pre>
+<p><img alt="Image" src="../assets/runtime/reference.jpg" /></p>
+<p>如图所示，由于在方法调用过程中，给变量分配的栈空间是连续的，并且是由低向高的，所以，main 中所分配的几个变量排列如图</p>
+<p>obj 在最前</p>
+<p>cls 第二</p>
+<p>s 第三</p>
+<p>每块内存中所存储的内容如图
+obj 所在的内存中，存储着 cls 的地址
+cls 所在内存中，存储着 Person 类对象的地址</p>
+<p>obj cls [Person class] 之间的关系就像是
+person变量 person实例对象 [Person class] 之间的关系</p>
+<p>obj 就相当于person变量，指向实例对象的 isa 指针（当然 obj 指向的是 cls），但是 实例对象的 isa 指针与 cls 所指向的都是 Person 类对象，那么系统就直接将 cls 所在内存地址及接下来的一部分地址直接当做 Person 实例对象来看待</p>
+<p>当调用 <code>[(__bridge id)obj test];</code> 的时候，系统将 obj 作为接收者，发送 test 消息</p>
+<p>obj 找到所指向内存地址拿到最前面的内容，对于 person实例对象来说就是 isa ，对于 cls 来说就是它自己，拿到其中的地址并找到类对象，查找方法并调用</p>
+<p>由于传递的 receiver 就是一个系统认为是 person 实例对象的一个指针，当 test 中尝试打印 _name 的时候，就会尝试找到跳过 isa 地址接下来的内容，对于真正的person 实例对象，那么就是 _name 成员变量，但是对于 把 cls 地址当做 person 实例对象的系统来说，拿到的就是跳过 cls 指针接下来的内容，是啥就拿啥，如果能正常解析就打印，不能正常解析就抛出错误 </p>
+<ul>
+<li>super 的调用，底层会转换为 objc_msgSendSuper2 函数的调用，接收 2 个参数</li>
+<li>struct objc_super2</li>
+<li>SEL</li>
+</ul>
+<pre><code class="language-C++">struct{
+    id receiver;
+    Class current_class;
+}
+</code></pre>
+<ul>
+<li>receiver 是消息接收者</li>
+<li>current_class 是 receiver 的 Class 对象</li>
+<li>objc_msgSendSuper2 的实现中会先通过 current_class 拿到 superclass，然后再进行方法查找</li>
+</ul>
+<h3 id="llvm">LLVM 中间代码</h3>
+<p><a href="https://llvm.org/docs/LangRef.html">LLVM 语法</a></p>
+<p>转为 LLVM 中间代码 <code>clang -emit-llvm -S main.m</code></p>
+<h3 id="runtime-api">Runtime API</h3>
+<h4 id="_6">类</h4>
+<pre><code class="language-Objective-C">void scream(id self, SEL _cmd){
+    NSLog(@&quot;%@ - %@&quot;, self, NSStringFromClass([self class]));
+}
+
+void classRelatedFuncs() {
+    Person *p = [[Person alloc] init];
+    NSLog(@&quot;%@&quot;, object_getClass(p)); // 获取类对象
+    [p run];
+    // object_setClass 设置类对象，将当前实例对象的类对象设置为其他类
+    object_setClass(p, [Car class]);
+    NSLog(@&quot;%@&quot;, object_getClass(p));
+    [p run];
+
+    // object_isClass 是否为类对象
+    NSLog(@&quot;%d %d %d&quot;,
+          object_isClass(p),
+          object_isClass([Person class]),
+          object_isClass(object_getClass([Person class]))); // 0 1 1,元类对象是一个特殊的类对象
+
+    // 是否为元类
+    class_isMetaClass(object_getClass([Person class]));
+
+    // 动态创建类
+    Class children = objc_allocateClassPair([NSObject class], &quot;Children&quot;, 0);
+
+    // 添加成员变量，可以使用 KVC 来设置获取值
+    // 成员变量只可以在类注册之前添加，因为 ivar list 是在 class_ro_t 中存储，已经注册就不可变
+    class_addIvar(children, &quot;_hairColor&quot;, 4, 1, @encode(int));
+    class_addIvar(children, &quot;_happy&quot;, 4, 1, @encode(int));
+
+    // 添加方法
+    // 方法可以在任何时候添加，因为 方法变化的话会动态初始化 class_rw_ext_t 中，可变
+    class_addMethod(children, @selector(scream), (IMP)scream, &quot;v16@0:8&quot;);
+
+    // 注册创建的类
+    objc_registerClassPair(children);
+    id child = [[children alloc] init];
+
+//    [child run];
+//    [child scream];
+    [child performSelector:@selector(scream)];
+    [child setValue:@10 forKey:@&quot;_happy&quot;];
+    NSLog(@&quot;%@ %@&quot;, children, [child valueForKey:@&quot;_happy&quot;]);
+
+    // 当创建的类不需要之后可以通过该方法释放
+//    objc_disposeClassPair(children);
+}
+
+void ivars(){
+    // 获取成员变量信息
+    Ivar var = class_getInstanceVariable([Person class], &quot;_name&quot;);
+    Ivar agevar = class_getInstanceVariable([Person class], &quot;_age&quot;);
+
+    // ivar_getName 获取 ivar 名称，ivar_getTypeEncoding 获取 types
+    NSLog(@&quot;%s %s&quot;, ivar_getName(var), ivar_getTypeEncoding(var));
+    Person *p = [[Person alloc] init];
+
+    // 设置对象成员变量值，设置对象类型, 如果是int 之类的值类型的话需要强转，而不可以使用 @10 这种方式
+    object_setIvar(p, var, @&quot;haha&quot;);
+    object_setIvar(p, agevar, (__bridge id)(void *)10);
+    NSLog(@&quot;%@ %d&quot;, p.name, p.age);
+
+    unsigned int count;
+    // 获取成员变量列表
+    Ivar *ivars = class_copyIvarList([Person class], &amp;count);
+    // 遍历并打印
+    for (int i = 0; i &lt; count; i++) {
+        Ivar ivar = ivars[i];
+        NSLog(@&quot;%s %s&quot;, ivar_getName(ivar), ivar_getTypeEncoding(ivar));
+    }
+    free(ivars);
+}
+
+void methodsRelated(){
+    unsigned int count;
+    Method * methods = class_copyMethodList([Person class], &amp;count);
+    for(int i = 0; i&lt;count; i++) {
+        Method method = methods[i];
+        NSLog(@&quot;%s&quot;, method_getName(method));
+    }
+
+    // 替换方法实现
+    class_replaceMethod([Person class], @selector(run), (IMP)scream, &quot;v16@0:8&quot;);
+    Person *p = [[Person alloc] init];
+    [p run];
+
+    // 使用 block 替换方法的 原实现
+    class_replaceMethod([Person class], @selector(run), imp_implementationWithBlock(^{
+        NSLog(@&quot;test with block &quot;);
+    }), &quot;v&quot;);
+    Person *p2 = [[Person alloc] init];
+    [p run];
+
+    // 交换方法实现
+    // 调用会清掉缓存，method_exchangeImplementations，然后将 class_rw_ext_t 表中方法列表中对应的方法的 imp 指针相互交换
+    Method test1 = class_getInstanceMethod([Person class], @selector(test1));
+    Method test2 = class_getInstanceMethod([Person class], @selector(test2));
+    method_exchangeImplementations(test1, test2);
+    Person *p3 = [[Person alloc] init];
+    [p test1];
+    [p test2];
+}
+
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        classRelatedFuncs();
+    }
+    return 0;
+}
+</code></pre>
+<p>获取私有成员变量
+字典转模型</p>
+<p>类簇，NSString, NSArray, NSDictionary 看上去是这个，单真实类型是其他类，使用 method_exchangeImplementations 的时候要注意真实的类对象，要用对</p>
+<p>systemFontOfSize hook 可以给设置的字体大小 * 一个系数来适配不同屏幕</p>
+<p>load 中去 交换方法的时候最好加一个 dispatch_once，防止load 方法被手动调用之后方法实现又被换回去</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../javascripts/highlight.min.js"></script>
+      
+        <script src="../../../javascripts/highlightjs-line-numbers.min.js"></script>
+      
+        <script src="../../../javascripts/highlight.js"></script>
+      
+    
+  </body>
+</html>
